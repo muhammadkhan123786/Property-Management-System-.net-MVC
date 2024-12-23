@@ -1,0 +1,55 @@
+﻿@model _360PropertyManagement.ViewModels.MsgReplyViewModle
+@using _360PropertyManagement.Models;
+
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).on('click', '#backLink', function () {
+        history.go(-1);
+    });
+</script>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var db=new Context();
+    var msges = db.msgdetails.Where(x => x.MessageId == Model.msgid).ToList();
+  
+    
+}
+<div style="margin-top:-50px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-left:300px; margin-right:300px; border:medium;">
+    <div style="background-color:black; color:white;">Message Subject </div>
+    <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFor(x=>x.msgsubject)</div><br />
+    @foreach(var items in msges)
+    {
+        
+        <div style="background-color:black; color:white;">@Html.DisplayFor(x=>items.StringSendName) On @Html.DisplayFor(x=>items.DateNTime) </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFormattedData(items.MessageDetails)</div><br />    
+    }
+
+@using (Html.BeginForm("MessageRead", "Profiles",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken();
+    <div style="background-color:black; color:white;">Write Reply </div>
+    <div class="editor-field">
+        @Html.TextAreaFor(m => m.MsgDetails, new { @class = "form-control" })
+    </div>
+   
+    <button type="submit" class="button">Send Reply</button>
+
+}
+
+
+     <div>        
+        @Html.ActionLink("Back to Profile", "Index", new {id= msges.First().AccountId})
+    </div>
+
+</div>

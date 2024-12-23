@@ -1,0 +1,44 @@
+﻿
+@model _360PropertyManagement.Models.Addresses
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).on('click', '#backLink', function () {
+        history.go(-1);
+    });
+</script>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:-50px;">
+    @Html.Partial("_Menus")
+</div>
+@{
+    var db = new Context();
+    var person = db.addresses.Where(x => x.AddressId == Model.AddressId).SingleOrDefault();
+    var viewmodel = new _360PropertyManagement.ViewModels.AddressViewModel(Model);
+}
+<div>
+    <div style="background-color:black; color:white;">Person Name </div>
+    <div style="font-family:Georgia; text-decoration:solid;">@person.person.PersonFullName</div><br />
+    <div style="background-color:black; color:white;">Address One </div>
+    <div style="font-family:Georgia; text-decoration:solid;">@viewmodel.AddressOne</div><br />
+    <div style="background-color:black; color:white;">Address Two </div>
+    <div style="font-family:Georgia; text-decoration:solid;">@viewmodel.AddressTwo</div><br />
+    <div style="background-color:black; color:white;">Country </div>
+    <div style="font-family:Georgia; text-decoration:solid;">@person.country.CountryName</div><br />
+    <div style="background-color:black; color:white;">State </div>
+    <div style="font-family:Georgia; text-decoration:solid;">@person.state.StateName</div><br />
+    <div style="background-color:black; color:white;">City </div>
+    <div style="font-family:Georgia; text-decoration:solid;">@person.city.CityName</div>
+    <div>
+        
+        <a href="javascript:void(0);" onclick="history.go(-1);">Back to Profile</a>
+    </div>
+
+</div>

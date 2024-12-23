@@ -1,0 +1,97 @@
+﻿@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script type="text/javascript">
+    function date_time(id) {
+        date = new Date;
+        year = date.getFullYear();
+        month = date.getMonth();
+        months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');
+        d = date.getDate();
+        day = date.getDay();
+        days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        h = date.getHours();
+        if (h < 10) {
+            h = "0" + h;
+        }
+        m = date.getMinutes();
+        if (m < 10) {
+            m = "0" + m;
+        }
+        s = date.getSeconds();
+        if (s < 10) {
+            s = "0" + s;
+        }
+        result = '' + days[day] + ', ' + months[month] + ' ' + d + ' ' + year + ', ' + h + ':' + m + ':' + s;
+        document.getElementById(id).innerHTML = result;
+        setTimeout('date_time("' + id + '");', '1000');
+        return true;
+    }
+
+</script>
+
+
+@{
+    var db = new _360PropertyManagement.Models.Context();
+    var license = db.LicenseProduct.Where(x => x.Status == true).SingleOrDefault();
+}
+
+
+<div id="headerdetails">
+    <div style="width:400px; margin-top:-20px;">
+        @Html.Image(license.image.Image)
+        <p style="margin-top:-30px; font-size:large; font:bold;">
+            @Html.DisplayFormattedData(license.SalogonStatement)
+        </p>
+
+
+    </div>
+    <div style="width:200px; margin-left:400px; margin-top:-120px;">
+        @Html.ActionLink("Post An Ad", "AdSubmision", "AdsSubmitted", null, new { @class = "Imranbutton" })
+    </div>
+    <div style="width:410px; margin-left:610px; margin-top:-20px;">
+
+        @if (System.Web.HttpContext.Current.Request.Cookies != null && System.Web.HttpContext.Current.Request.Cookies.AllKeys.Contains(FormsAuthentication.FormsCookieName))
+        {
+            <div style="float: right; padding-right: 25px;">@Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "Imranbutton" })</div>
+            <div style="float: right; padding-right: 25px;">@Html.ActionLink("My Dashboard", "MyDashboard", "Account", null, new { @class = "Imranbutton" })</div>
+        }
+        else
+        {
+            <div style="float:right; padding-right:25px;"> @Html.ActionLink("My Account", "Login", "Account", null, new { @class = "Imranbutton" })
+               
+        
+        </div>
+               
+        }
+        
+    </div>
+   <div style="margin-left:1020px; margin-top:-40px;">
+       <span id="date_time" style="float:right; padding-right:20px; font-style:normal;font-size:large;">
+           <script type="text/javascript">window.onload = date_time('date_time');</script>
+       </span>
+
+
+   </div>
+    
+</div>
+
+
+
+
+
+
+
+<div id="content">
+    @RenderBody()
+</div>
+
+<div id="footer" style="color:white;">
+    @Html.DisplayFormattedData(license.CompanyName)
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+
+

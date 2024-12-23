@@ -1,0 +1,62 @@
+﻿@model _360PropertyManagement.ViewModels.BulkEmailsViewModel
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "BulkEmails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("SendBulkEmails", "Occupation",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="main-wrap" style="margin-top:20px;">
+            <div class="reset-head1">Send Email To All</div>
+
+            <div class="child-main1">
+                <div class="form-group">
+                    Email Subject*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.EmailSubject, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.EmailSubject)
+                    </div>
+                </div>
+                <div class="form-group">
+                    Email Message*
+                    <div class="editor-field">
+                        @Html.TextAreaFor(m => m.EmailMessage, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.EmailMessage)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="button">Send Email</button>
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "button" })
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+
+
+</div>

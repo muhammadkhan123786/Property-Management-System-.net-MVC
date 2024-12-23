@@ -1,0 +1,175 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.MsgReceiver>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/mvc/5.0/jquery.validate.unobtrusive.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/mvc/5.0/jquery.validate.unobtrusive.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:-50px;">
+    @Html.Partial("_Menus")
+</div>
+@{
+
+    var countmsg = Model.Where(x => x.IsRead == false).Count();
+
+}
+<div style="float:right; width:270px; border:solid;">
+    <div>
+        <p style="background-color:black;color:white;">Useful Links</p>
+        @Ajax.ActionLink("Personal Info",
+        "PersonalInfo",
+        new { id = ViewBag.Id },
+        new AjaxOptions()
+        {
+            UpdateTargetId = "content",
+            InsertionMode = InsertionMode.Replace
+        })
+        <br />
+        @Ajax.ActionLink("Contact Info",
+        "ContactInfo",
+        new { id = ViewBag.Id },
+        new AjaxOptions()
+        {
+            UpdateTargetId = "content",
+            InsertionMode = InsertionMode.Replace
+        })
+        <br />
+        @Html.ActionLink("Saved Ads", "SaveAds", new { id = ViewBag.Id })
+        <br />
+        @Ajax.ActionLink("User Address",
+        "UserAddress",
+        new { id = ViewBag.Id },
+        new AjaxOptions()
+        {
+            UpdateTargetId = "content",
+            InsertionMode = InsertionMode.Replace
+        })
+        <br />
+        @if (countmsg > 0)
+        {
+            <p style="background-color:black;">@Html.ActionLink("Incoming Messages" + " " + (countmsg.ToString()), "Index", new { id = ViewBag.Id })</p>
+        }
+        else
+        {
+            @Html.ActionLink("Incoming Messages" + " " + (countmsg.ToString()), "Index", new { id = ViewBag.Id })<br />
+        }
+        @Html.ActionLink("Posted Ads", "Userads", new { id = ViewBag.Id })<br />
+        @Html.ActionLink("Matches Ads", "UserMatchesAds", new { id = ViewBag.Id })<br />
+        @Html.ActionLink("Back to Accounts", "AccountsByRoleId","Role", new { id = ViewBag.aacroleid },null)
+    </div>
+
+</div>
+<div class="page-wrap" style="margin-right:300px;" id="content">
+
+    <div style="height:30px;">
+
+        <div style="float:right; padding-right:30px;">
+            Search Message @using (Html.BeginForm("Index", "Profiles", FormMethod.Get))
+                           {
+
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+                           }
+        </div>
+
+    </div>
+    <table>
+
+        <tr>
+            <td>
+                Message Subject
+            </td>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                IsRead?
+            </td>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                Sent Date
+            </td>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                Message Sender
+            </td>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                Sender Desgination
+            </td>
+
+
+            <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            if (item.IsRead == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(x=>item.msgdetails.msg.MessageSubject)
+                    </td>
+                    <td>
+                        @(item.IsRead ? "Read" : "Unread")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x=>item.msgdetails.DateNTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => item.msgsender.acc.AccountEmailId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => item.msgsender.acc.role.RoleName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Read Message", "ReadMessage", new { id = item.MeesageReceiverId }, new { @class = "util_icon_view" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MeesageReceiverId })|
+
+                    </td>
+                </tr>
+
+            }
+            else
+            {
+                <tr>
+                    <td style="color:white; background-color:red;">
+                        @Html.DisplayFor(modelitem => item.msgdetails.msg.MessageSubject)
+                    </td>
+
+                    <td>
+                        @(item.IsRead ? "Read" : "Unread")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => item.msgdetails.DateNTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => item.msgsender.acc.AccountEmailId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => item.msgsender.acc.role.RoleName)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Read Message", "MessageRead", new { id = item.MeesageReceiverId }, new { @class = "util_icon_view" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MeesageReceiverId})|
+
+                    </td>
+                </tr>
+
+            }
+
+        }
+
+    </table>
+    <div style="padding-left:15px; padding-top:15px;">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

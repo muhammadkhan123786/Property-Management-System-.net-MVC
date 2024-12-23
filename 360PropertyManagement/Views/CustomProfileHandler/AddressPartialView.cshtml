@@ -1,0 +1,82 @@
+﻿@model _360PropertyManagement.ViewModels.CustomAddressProfileViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Add my address";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+    <div style="margin-top:170px;">
+        <div style="width:500px;margin-left:300px; border:thick;">
+            <div style="width:500px; background-color:black; color:white; text-align:center;">My Address Details</div>
+            <table style="width:500px;">
+                <tr>
+                    <td>
+                        Address One*
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.AddressOne)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Address Two
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => m.AddressTwo)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Country
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.CountryName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        State
+                    </td>
+                    <td id="StatesDivID">
+                        @Html.DisplayFor(x => x.StateName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        City
+                    </td>
+                    <td id="CityDivID">
+                        @Html.DisplayFor(x => x.CityName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Status
+                    </td>
+                    <td>
+                        @(Model.Status ? "Active" : "In-Active")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Edit Address", "ProfileAddressEdit")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Back", "MyDashBoard", "Account")
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        }
+
+    </div>

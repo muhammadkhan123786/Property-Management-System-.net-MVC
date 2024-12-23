@@ -1,0 +1,70 @@
+﻿@model _360PropertyManagement.ViewModels.LicenseContactInfo
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var db = new Context();
+    var license = db.LicenseProduct.Where(x => x.Status == true).SingleOrDefault();
+}
+<div id="menudiv" style="margin-top:80px;">
+    @Html.Partial("_PublicMenus")
+</div>
+<div style="margin-top:90px;">
+    <img src="~/Content/images/contact-banner (1)20734266.jpg">
+</div>
+<div>
+    <div style="background-color:black; color:white;">Office Address One</div>
+    <div style="font-family: Georgia; text-decoration: solid; margin-left: 5px;">@Html.DisplayFormattedData(license.address.AddressOne)</div><br />
+    <div style="background-color:black; color:white;">Office Address Two </div>
+    <div style="font-family: Georgia; text-decoration: solid; margin-left: 5px;">@Html.DisplayFormattedData(license.address.AddressTwo)</div><br />
+    <div style="background-color:black; color:white;">Mobile Numbers</div>
+    <div style="font-family:Georgia; text-decoration:solid; margin-left:5px;">@string.Format("{0: (###) ###-####}", Model.MobileOne)
+      <br />
+    @if(Model.MobileTwo!=null)
+    { 
+        @Html.DisplayFor(x=>x.MobileTwo)
+    }
+    </div><br />
+    @if(Model.PhoneOne!=null||Model.PhoneTwo!=null)
+    { 
+       <div style="background-color:black; color:white;">Phone Numbers </div>
+       <div style="font-family: Georgia; text-decoration: solid; margin-left: 5px;">@Html.DisplayFor(x=>x.PhoneOne)<br />
+        @Html.DisplayFor(x=>x.PhoneTwo)
+           
+    </div>
+    }
+    <br />
+    <div style="background-color:black; color:white;">Email Id</div>
+    <div style="font-family: Georgia; text-decoration: solid; margin-left: 5px;">
+        @Html.DisplayFormattedData(license.contact.person.account.AccountEmailId)
+    </div>
+   <br />
+    <div style="background-color:black; color:white;">Website</div>
+    <div style="font-family: Georgia; text-decoration: solid; margin-left: 5px;">
+        @Html.DisplayFormattedData(license.contact.Website)
+    </div>
+    <br />
+
+    <div style="background-color:black; color:white;">Country</div>
+    <div style="font-family: Georgia; text-decoration: solid; margin-left: 5px;">
+        @Html.DisplayFormattedData(license.address.country.CountryName)
+    </div>
+    <br />
+    <div style="background-color:black; color:white;">State</div>
+    <div style="font-family: Georgia; text-decoration: solid; margin-left: 5px;">
+        @Html.DisplayFormattedData(license.address.state.StateName)
+    </div>
+    <br />
+    <div style="background-color:black; color:white;">City</div>
+    <div style="font-family: Georgia; text-decoration: solid; margin-left: 5px;">
+        @Html.DisplayFormattedData(license.address.city.CityName)
+    </div>
+
+
+</div>

@@ -1,0 +1,14 @@
+﻿footer { bottom: 0;
+    background: #353535;
+    height: 40px;
+    color: #fff;
+    padding-top: 11px;
+    padding-left: 10px;
+} 
+main { min-height: calc(100% - 100px); padding: 50px 0; overflow: 0px; }
+
+
+.editor-field textarea {
+    width : 400px;
+    height : 100px;
+}

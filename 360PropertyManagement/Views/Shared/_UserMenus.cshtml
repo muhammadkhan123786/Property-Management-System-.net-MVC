@@ -1,0 +1,57 @@
+﻿<!doctype html>
+
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/MenusCSS/styles.css" rel="stylesheet" />
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script src="~/Content/MenusCSS/script.js"></script>
+
+<body>
+    <div id='cssmenu'>
+        <ul>
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("My Saved Ads", "MySaveAds", "CustomeProfile")</li>
+            <li>@Html.ActionLink("My Submited Ads", "Myads", "CustomProfileHandler")</li>
+            <li>@Html.ActionLink("My Areas", "Index", "MyAreas")</li>
+            <li>
+                @Ajax.ActionLink("Personal Info",
+                                            "ProfileImage",
+                                            "CustomProfileHandler",
+                                             new AjaxOptions()
+                                          {
+                                              UpdateTargetId = "content",
+                                              InsertionMode = InsertionMode.Replace
+                                          })
+            </li>
+
+            <li>
+                @Ajax.ActionLink("Contact Info",
+                                                 "DisplayContactInfo",
+                                                          "CustomProfileHandler",
+                                                 
+                                             new AjaxOptions()
+                                          {
+                                              UpdateTargetId = "content",
+                                              InsertionMode = InsertionMode.Replace
+                                          })
+        </li>
+
+        <li>
+            @Ajax.ActionLink("Address Info",
+                                                "DisplayAdressInfo",
+                                                "CustomProfileHandler",
+                                                 new AjaxOptions()
+                                               {
+                                                   UpdateTargetId = "content",
+                                                   InsertionMode = InsertionMode.Replace
+                                               })
+        </li>
+
+            <li>@Html.ActionLink("Change Password", "ChangeProfilePassword", "CustomProfileHandler")</li>
+
+            <li>@Html.ActionLink("Inbox", "ProfileMessages", "CustomProfileHandler")</li>
+            <li>@Html.ActionLink("Change Profile Image", "ChangeProfileImage", "CustomProfileHandler")</li>
+        </ul>
+    </div>
+</body>

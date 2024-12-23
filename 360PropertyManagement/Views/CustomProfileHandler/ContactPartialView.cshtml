@@ -1,0 +1,130 @@
+﻿@model _360PropertyManagement.ViewModels.ProfileCustomContactViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Add Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@{
+    var db = new Context();
+
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:170px;">
+
+    <div style="width:500px;margin-left:300px; border:thick;">
+        <div style="width:500px; background-color:black; color:white; text-align:center;">My Contact Details</div>
+        <table style="width:500px;">
+            <tr>
+                <td>
+                    Mobile One*
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.MobileOne)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mobile Two
+                </td>
+                @if (Model.MobileTwo == null)
+                {
+                    <td>
+                        @Html.Display("Mobile Two Not Available")
+                    </td>
+                }
+                @if (Model.PhoneTwo != null)
+                {
+                    <td>
+                        @Html.DisplayFor(m => m.MobileTwo)
+                    </td>
+                }
+
+            </tr>
+            <tr>
+                <td>
+                    Phone One
+                </td>
+                @if (Model.PhoneOne == null)
+                {
+                    <td>
+                        @Html.Display("Phone One Not Available")
+                    </td>
+                }
+                @if (Model.PhoneOne != null)
+                {
+                    <td>
+                        @Html.DisplayFor(m => m.PhoneOne)
+                    </td>
+                }
+
+            </tr>
+            <tr>
+                <td>
+                    Phone Two
+                </td>
+                @if (Model.PhoneTwo == null)
+                {
+                    <td>
+                        @Html.Display("Phone Two Not Available")
+                    </td>
+                }
+                @if (Model.PhoneTwo != null)
+                {
+                    <td>
+                        @Html.DisplayFor(m => m.PhoneTwo)
+                    </td>
+                }
+
+
+            </tr>
+            <tr>
+                <td>
+                    Website
+                </td>
+                @if (Model.Website == null)
+                {
+                    <td> @Html.Display("Website Not Available")</td>
+                }
+                @if (Model.Website != null)
+                {
+                    <td>
+                        @Html.DisplayFor(m => m.Website)
+                    </td>
+                }
+
+            </tr>
+            <tr>
+                <td>
+                    Status
+                </td>
+                <td>
+                    @(Model.Status ? "Active" : "In-Active")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit Contact Info", "ProfileContactEdit")
+                </td>
+                <td>
+                    @Html.ActionLink("Back", "MyDashBoard", "Account")
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

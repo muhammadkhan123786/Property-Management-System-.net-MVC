@@ -1,0 +1,83 @@
+﻿@model _360PropertyManagement.ViewModels.AccountViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("Edit", "AdminAccount",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="main-wrap">
+            <div class="reset-head1">Edit an account</div>
+
+            <div class="child-main1">
+
+                <div class="form-group">
+                    @Html.ValidationSummary()
+                    Email*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.AccountEmailId, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.AccountEmailId)
+                    </div>
+                </div>
+                <div class="form-group">
+                    Is-Active*
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(x => x.Isactive, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+
+
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.Isactive)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="button" value="Update" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="child-main">
+                By having a password you will have access to My ads where you can: <br /> <br />
+                Edit or Delete your Ads<br />
+                Check responses for your Ads<br />
+                See saved Ads<br /><br />
+                Provide your e-mail address & password and click confirm link in e-mail which will be sent to you..
+            </div>
+
+        </div>
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

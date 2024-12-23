@@ -1,0 +1,61 @@
+﻿@model _360PropertyManagement.ViewModels.CountriesViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("Edit", "Country",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+
+        @Html.AntiForgeryToken()
+        <div class="main-wrap" style="margin-top:20px; width:400px; margin-left:400px;">
+            <div class="reset-head1" style="width:400px;">Edit a country</div>
+            <div class="child-main1">
+                <div class="form-group">
+                    Country Name*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.CountryName, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.CountryName)
+                    </div>
+                    @Html.ValidationSummary()
+                </div>
+                <div class="form-group">
+                    Status*
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.Status)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="button">Update</button>
+                        <button class="button" onclick="location.href='@Url.Action("Index", "Country")';return false;">Cancel</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

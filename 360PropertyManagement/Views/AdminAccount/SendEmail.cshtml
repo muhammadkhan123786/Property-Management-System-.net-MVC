@@ -1,0 +1,66 @@
+﻿@model _360PropertyManagement.ViewModels.EmailSendViewModel
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "SendEmail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("SendEmail", "AdminAccount",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="main-wrap" style="margin-top:20px">
+            @Html.ValidationSummary()
+            <div class="reset-head1">New Email</div>
+
+            <div class="child-main1">
+
+                <div class="form-group">
+                    @Html.HiddenFor(x => x.emailid)
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.emailid)
+                    </div>
+                </div>
+                <div class="form-group">
+                    Email Subject
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.EmailSubject, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.EmailSubject)
+                    </div>
+                </div>
+                <div class="form-group">
+                    Email Message
+                    <div class="editor-field">
+                        @Html.TextAreaFor(m => m.EmailMessage, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.EmailMessage)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="button" value="Send" style="height:30px; margin-top:-3px;" />
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "button" })
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>
+

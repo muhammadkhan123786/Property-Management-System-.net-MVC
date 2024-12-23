@@ -1,0 +1,47 @@
+﻿@using _360PropertyManagement.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var db = new Context();
+    
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:170px;">
+    <div>
+        @if (System.Web.HttpContext.Current.Request.Cookies != null && System.Web.HttpContext.Current.Request.Cookies.AllKeys.Contains(FormsAuthentication.FormsCookieName))
+        {
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+            string ticketdata = ticket.UserData;
+            var _contextcachedUser = db.accounts.Where(x => x.AccountEmailId == ticketdata).SingleOrDefault();
+            var person = db.persons.Where(x => x.AccountId == _contextcachedUser.AccountId).SingleOrDefault();
+            if (person != null)
+            {
+                <div>
+                    @Html.Image(person.image.Image)
+                </div><br />
+
+
+            }
+            var msges = db.msgreceiver.Where(x => x.AccountId == _contextcachedUser.AccountId).ToList();
+            var countunreadmsges = msges.Where(x => x.IsRead == false).Count();
+            if (countunreadmsges > 0)
+            {
+                <div style="margin-left: 180px; float: right; margin-top: 100px;">You have Unread Messages @Html.ActionLink(countunreadmsges.ToString(), "ProfileMessages", "CustomProfileHandler", null, new { @class = "button" })</div>
+            }
+            else
+            {
+                <div style="margin-left:180px; float:right; margin-top:100px;">No New Message @Html.ActionLink("Go Inbox", "ProfileMessages", "CustomProfileHandler")</div>
+            }
+
+        }
+
+
+    </div>
+
+
+</div>

@@ -1,0 +1,406 @@
+﻿@model _360PropertyManagement.ViewModels.LicenseViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+ <script type="text/javascript">
+        function readfile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image_preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    function readlogo(pics) {
+        if (pics.files && pics.files[0]) {
+            var logoreader = new FileReader();
+
+            logoreader.onload = function (e) {
+                $('#logoimage_preview').attr('src', e.target.result);
+            }
+
+            logoreader.readAsDataURL(pics.files[0]);
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#StatesDivID').hide();
+        $('#CountryId').change(function () {
+            var selectedItem = $(this).val();
+            if (selectedItem > 0) {
+                $('#StatesDivID').show();
+            }
+            else {
+                $('#StatesDivID').hide();
+            }
+
+            var ddlStates = $("#StateId");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url:"@(Url.Action("StateList", "SuperAdminLicense"))",
+                data: { "CountryId": selectedItem },
+                success: function (data) {
+                    ddlStates.html('');
+                    ddlStates.append("<option value='' selected='selected'>Select State</option>");
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+                    statesProgress.hide();
+                    
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#SubmitID').hide();
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+
+                },
+
+
+            });
+                   
+
+        });
+                
+            });
+
+
+
+       
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#CityDivID').hide();
+        $('#StateId').change(function () {
+            var selectedItem = $(this).val();
+            if (selectedItem > 0) {
+                $('#CityDivID').show();
+            }
+            else {
+                $('#CityDivID').hide();
+            }
+
+            var ddlCity = $("#CityId");
+            var CityProgress = $("#City-loading-progress");
+            CityProgress.show();
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url:"@(Url.Action("CityList", "SuperAdminLicense"))",
+                data: { "StateId": selectedItem },
+            success: function (data) {
+                ddlCity.html('');
+                ddlCity.append("<option value='' selected='selected'>Select City</option>");
+                $.each(data, function (id, option) {
+                    ddlCity.append($('<option></option>').val(option.id).html(option.name));
+
+                });
+                CityProgress.hide();
+             
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#SubmitID').hide();
+                alert('Failed to retrieve states.');
+                statesProgress.hide();
+
+            },
+
+
+            });
+                   
+
+    });
+                
+    });
+
+</script>
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+    <div style="margin-top:73px;">
+        @Html.Partial("SuperAdminView")
+    </div>
+<div style="margin-top:100px;">
+    @using (Html.BeginForm("Add", "SuperAdminLicense",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="page-wrap" style="margin-top:-40px;">
+            <div class="reset-head1" style="margin-top:50px; width:auto;">Create a Prodcut License</div>
+
+            <table style="margin-top:10px;">
+                <tr>
+                    <th colspan="5" style="background-color: black; font-weight: bold; color: #fff;">
+                        Personal Info
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        First Name*:@Html.TextBoxFor(x => x.Firstname)
+                        @Html.ValidationMessageFor(x => x.Firstname)
+
+                    </td>
+
+                    <td>
+                        Second Name: @Html.TextBoxFor(x => x.Secondname)
+                        @Html.ValidationMessageFor(x => x.Secondname)
+                    </td>
+                    <td>
+                        Last Name: @Html.TextBoxFor(x => x.lastname)
+                        @Html.ValidationMessageFor(x => x.lastname)
+                    </td>
+                    <td>Gender: @Html.DropDownList("GenderId", "Select Gender")</td>
+                    <p>@Html.ValidationMessageFor(x => x.GenderId)</p>
+                    <td>Occupation: @Html.DropDownList("OccupationId", "Select Person Occupation")</td>
+                    <p>@Html.ValidationMessageFor(x => x.OccupationId)</p>
+                    <p>@Html.ValidationSummary()</p>
+
+                </tr>
+
+            </table>
+            <table style="margin-top:20px;">
+
+                <tr>
+                    <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                        Contact Info
+                    </th>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Mobile One*:@Html.TextBoxFor(x => x.MobileOne)
+                        @Html.ValidationMessageFor(x => x.MobileOne)
+                    </td>
+                    <td>
+                        Mobile Two: @Html.TextBoxFor(x => x.MobileTwo)
+                        @Html.ValidationMessageFor(x => x.MobileTwo)
+                    </td>
+                    <td>
+                        Phone One: @Html.TextBoxFor(x => x.PhoneOne)
+                        @Html.ValidationMessageFor(x => x.PhoneOne)
+                    </td>
+                    <td>
+                        Phone Two: @Html.TextBoxFor(x => x.PhoneTwo)
+                        @Html.ValidationMessageFor(x => x.PhoneTwo)
+                    </td>
+                    <td>
+                        Website: @Html.TextBoxFor(x => x.Website)
+                        @Html.ValidationMessageFor(x => x.Website)
+                    </td>
+
+                </tr>
+
+            </table>
+
+            <table style="margin-top:20px;">
+
+                <tr>
+                    <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                        Account Info
+                    </th>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Account Email*:@Html.TextBoxFor(x => x.AccountEmailId)
+                        @Html.ValidationMessageFor(x => x.AccountEmailId)
+                    </td>
+                    <td>
+                        Password: @Html.TextBoxFor(x => x.AccountPassword)
+                        @Html.ValidationMessageFor(x => x.AccountPassword)
+                    </td>
+                    <td>
+                        Confirm Password: @Html.TextBoxFor(x => x.AccountConfirmPassword)
+                        @Html.ValidationMessageFor(x => x.AccountConfirmPassword)
+                    </td>
+                    <td>
+                        Person Image
+
+                        <input type='file' id="file1" name="Photo" onchange="readfile(this);" />
+                        <img id="image_preview" alt="your image" width="50" height="50" />
+
+                    </td>
+
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                        Address Info
+                    </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        Office Address*@Html.TextBoxFor(x => x.AddressOne)
+                        @Html.ValidationMessageFor(x => x.AddressOne)
+                    </td>
+                    <td>
+                        Address Two(Optional)@Html.TextBoxFor(x => x.AddressTwo)
+                        @Html.ValidationMessageFor(x => x.AddressTwo)
+                    </td>
+                    <td>
+                        Country @Html.DropDownList("CountryId", "Select Country")
+                        @Html.ValidationMessageFor(x => x.CountryId)
+                    </td>
+                    <td id="StatesDivID">
+                        State @Html.DropDownList("StateId", "Select State")
+                        @Html.ValidationMessageFor(x => x.StateId)
+                        <span id="states-loading-progress" style="display: none;">Please wait..</span>
+                    </td>
+                    <td id="CityDivID">
+                        City @Html.DropDownList("CityId", "Select City")
+                        <span id="City-loading-progress" style="display: none;">Please wait..</span>
+                        @Html.ValidationMessageFor(x => x.CityId)
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                        License Info
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Business Name*@Html.TextBoxFor(x => x.CompanyName)
+                        @Html.ValidationMessageFor(x => x.CompanyName)
+                    </td>
+                    <td class="editor-field">
+                        About Us*@Html.TextAreaFor(x => x.AboutUs)
+                        @Html.ValidationMessageFor(x => x.AboutUs)
+                    </td>
+                    <td class="editor-field">
+                        Vision Statement*@Html.TextAreaFor(x => x.VisionStatement)
+                        @Html.ValidationMessageFor(x => x.VisionStatement)
+                    </td>
+
+                </tr>
+
+            </table>
+            <table>
+                <tr>
+                    <td class="editor-field">
+                        Mission Statement*@Html.TextAreaFor(x => x.MissionStatement)
+                        @Html.ValidationMessageFor(x => x.MissionStatement)
+                    </td>
+                    <td>
+                        Company Logo
+                        <form id="form1">
+                            <input type='file' id="file2" name="CompanyLogo" onchange="readlogo(this);" />
+                            <img id="logoimage_preview" src="https://cdn1.iconfinder.com/data/icons/user-pics/512/user_add-512.png" alt="your image" width="50" height="50" />
+                        </form>
+                        @Html.ValidationMessageFor(x => x.CompanyLogo)
+                    </td>
+                    <td>
+                        Slogan @Html.TextBoxFor(x => x.SalogonStatement)
+                        @Html.ValidationMessageFor(x => x.SalogonStatement)
+                    </td>
+                </tr>
+            </table>
+            <table>
+
+                <tr>
+                    <td>
+                        License Status*
+                        @Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                        @Html.ValidationMessageFor(x => x.Status)
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                        Payment Info
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        License Fee Per Year
+                        @Html.TextBoxFor(x => x.LicenseFeePerYear)
+                        @Html.ValidationMessageFor(x => x.LicenseFeePerYear)
+                    </td>
+                    <td>
+                        License Fee For Years
+                        @Html.TextBoxFor(x => x.LicenseFeeForYears)
+                        @Html.ValidationMessageFor(x => x.LicenseFeeForYears)
+                    </td>
+                    <td>
+                        Domain & Hosting Fee
+                        @Html.TextBoxFor(x => x.DomainandHostingFee)
+                        @Html.ValidationMessageFor(x => x.DomainandHostingFee)
+                    </td>
+                    <td>
+                        Discount
+                        @Html.TextBoxFor(x => x.Discount)
+                        @Html.ValidationMessageFor(x => x.Discount)
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Annual Fee
+                        @Html.TextBoxFor(x => x.AnnualFee)
+                        @Html.ValidationMessageFor(x => x.AnnualFee)
+                    </td>
+
+                    <td>
+                        Payment Status
+                        @Html.DropDownListFor(x => x.PaymentStatus, new[] {
+                    new SelectListItem() {Text = "Paid", Value = "true"},
+                    new SelectListItem() {Text = "Not-Paid", Value = "false"}}, "Not Specified")
+                        @Html.ValidationMessageFor(x => x.PaymentStatus)
+                    </td>
+                    <td>
+                        Payment Receiving Date
+                        @Html.TextBox("ReceivingDate", null, new { id = "RDDATE" })
+                        @Html.ValidationMessageFor(x => x.ReceivingDate)
+                    </td>
+
+                    <td>
+                        <button type="submit" class="button">Add</button>
+                        <button class="button" onclick="location.href='@Url.Action("Index", "SuperAdminLicense")';return false;">Cancel</button>
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+
+
+        </div>
+
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+
+
+</div>

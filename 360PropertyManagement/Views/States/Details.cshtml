@@ -1,0 +1,80 @@
+﻿@model _360PropertyManagement.Models.States
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).on('click', '#backLink', function () {
+        history.go(-1);
+    });
+</script>
+
+@{
+    ViewBag.Title = "Add Occupation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@{
+    var db = new Context();
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+
+    <div style="width:500px;margin-left:400px; border:thick;">
+        <div style="width:350px; background-color:black; color:white; text-align:center;">State Details</div>
+        <table style="width:350px;">
+            <tr>
+                <td>
+                    State Name
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.StateName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Country Name
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.country.CountryName)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Status
+                </td>
+                <td>
+                    @(Model.Status ? "Active" : "In-Active")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Ads In @Html.DisplayFor(x => x.StateName)
+                </td>
+                <td>
+                    0
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.StateId }) |
+                    @Html.ActionLink("View Ads", "AdsByStateId", new { id = Model.CountryId })
+                </td>
+                <td>
+                    <a href="javascript:void(0);" onclick="history.go(-1);">Back to States</a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

@@ -1,0 +1,22 @@
+﻿<!doctype html>
+
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/MenusCSS/styles.css" rel="stylesheet" />
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script src="~/Content/MenusCSS/script.js"></script>
+
+<body>
+    <div id='cssmenu'>
+        <ul>
+            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About Us", "About", "Home")</li>
+            <li>@Html.ActionLink("Our Agents", "Agents", "Home")</li>
+            <li>@Html.ActionLink("BlackListed Agents", "blacklistedagents", "Home")</li>
+            <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+            <li>@Html.ActionLink("PRODUCTS", "Index", "Products")</li>
+            <li>@Html.ActionLink("ORDERS", "Index", "CustomerOrders")</li>
+        </ul>
+    </div>
+</body>

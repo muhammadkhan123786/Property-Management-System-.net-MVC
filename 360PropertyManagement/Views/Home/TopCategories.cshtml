@@ -1,0 +1,122 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.TopCategory>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtSearch").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/autoCompleteCategory",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.TopCategoryName, value: item.TopCategoryName };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var db = new Context();
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_PublicMenus")
+</div>
+<div style="margin-top:130px;">
+
+    <div>
+        <div style="float:right;">
+            <div style="float:right; padding-right:30px;">
+                Search Category  @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                {
+                    
+
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+                }
+            </div>
+        </div>
+        <div class="page-wrap">
+            <table>
+                <tr>
+                    <td style="background-color: black; font-weight: bold; color: #fff;">
+                        Category Image
+                    </td>
+
+                    <td style="background-color: black; font-weight: bold; color: #fff;">
+                        Category Name
+                    </td>
+                    <td style="background-color: black; font-weight: bold; color: #fff;">
+                        Is Active?
+                    </td>
+                    <td style="background-color: black; font-weight: bold; color: #fff;">
+                        Total Ads
+                    </td>
+
+                    <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+                </tr>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.Image(item.image.Image)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TopCategoryName)
+                        </td>
+                        <td>
+
+                            @(item.IsActive ? "Yes" : "No")
+                        </td>
+                        <td>
+                            @(db.submitedads.Where(x => x.propertyad.TopCategoryId == item.TopCategoryId).Count())
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("View Ads", "Propertiesbycategory", new { id = item.TopCategoryId }, new { @class = "button" })
+
+                        </td>
+                    </tr>
+
+
+                }
+
+            </table>
+            <br />
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+    </div>
+
+</div>

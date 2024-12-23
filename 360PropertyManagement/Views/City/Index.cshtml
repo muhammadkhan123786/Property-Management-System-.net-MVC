@@ -1,0 +1,130 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.Cities>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#CountryId').change(function () {
+            var selectedItem = $(this).val();
+            var ddlStates = $("#StateId");
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url:"@(Url.Action("StateList", "City"))",
+                data: { "CountryId": selectedItem },
+                success: function (data) {
+                    ddlStates.html('');
+                    ddlStates.append("<option value='' selected='selected'>Select State</option>");
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#SubmitID').hide();
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+
+                }
+                
+
+
+            });
+        });
+
+    });
+</script>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+@Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    <div class="page-wrap">
+
+        <div style="height:30px;">
+            <div style="float:left; padding-left:30px; padding-top:20px; font-size:20px;">
+                @Html.ActionLink("Add New City", "Add", null, new { @class = "util_icon_new" })
+            </div>
+
+            <div style="float:right; padding-right:30px;">
+                Search City @using (Html.BeginForm("Index", "City", FormMethod.Get))
+                {
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+                }
+            </div>
+
+        </div>
+
+        <table>
+
+            <tr>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    City Name
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Country
+                </td>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    State
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Status
+                </td>
+
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+            </tr>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="img1-icon">
+                        @Html.DisplayFor(modelitem => item.CityName)
+                    </td>
+                    <td class="img1-icon">
+                        @Html.DisplayFor(modelitem => item.country.CountryName)
+                    </td>
+                    <td class="img1-icon">
+                        @Html.DisplayFor(modelitem => item.state.StateName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CityId }, new { @class = "util_icon_edit" }) |
+                        @Html.ActionLink("View Ads Added", "ViewAdsByCountry", new { id = item.StateId })|
+                        @Html.ActionLink("Details", "Details", new { id = item.CityId }, new { @class = "util_icon_view" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CityId })|
+
+                    </td>
+                </tr>
+
+
+            }
+
+        </table>
+        <div style="padding-left:15px; padding-top:15px;">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+    </div>
+
+
+</div>                    

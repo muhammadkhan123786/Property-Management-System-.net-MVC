@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.Accounts>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetAccounts")',
+            minLength: 2
+
+
+        });
+
+    });
+</script>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:80px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;" >
+
+    <p style="font-size:large; margin-top:20px;">
+        @Html.ActionLink("Create an account", "Add", null, new { @class = "util_icon_new" })
+    </p>
+
+    <div class="page-wrap">
+        <table>
+            <tr>
+                <td>
+                    <p>Enter Email Id</p>
+                    @using (Html.BeginForm("Index", "AdminAccount", FormMethod.Get))
+                    {
+
+                        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+                    }
+
+                </td>
+                <td>
+
+                    @Html.ActionLink("Send Messages to all Accounts", "BulkMessages", new { id = ViewBag.ids })
+
+
+                </td>
+
+
+            </tr>
+            <tr>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Account Email Id
+                </td>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Is Varified?
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+            </tr>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountEmailId)
+                    </td>
+                    <td>
+                        @(item.IsVarified ? "Yes" : "No")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.AccountId }, new { @class = "util_icon_edit" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.AccountId }, new { @class = "util_icon_view" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.AccountId })|
+                        @Html.ActionLink("Send Email", "SendEmail", new { id = item.AccountId })|
+                        @Html.ActionLink("Change Role", "UpdateRole", new { id = item.AccountId })|
+                        @Html.ActionLink("Change Password", "ChangePassword", new { id = item.AccountId })|
+                        @Html.ActionLink("Send Message", "SendMessage", new { id = item.AccountId })|
+                        @Html.ActionLink("Make Amin", "MakeAdmin", new { id = item.AccountId })|
+                        
+                    </td>
+                </tr>
+
+
+            }
+
+        </table>
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+
+</div>
+
+
+
+
+
+

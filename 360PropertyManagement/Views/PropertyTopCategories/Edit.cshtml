@@ -1,0 +1,114 @@
+﻿@model _360PropertyManagement.ViewModels.TopPropertyCategoryViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Add Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var db = new Context();
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("Edit", "PropertyTopCategories",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div style="width:500px;margin-left:300px; border:thick;">
+            <div style="width:500px; background-color:black; color:white; text-align:center;">Edit Top Category</div>
+            <table style="width:500px;">
+                <tr>
+                    <td>
+                        Top Category Name*
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.TopCategoryName)
+                        @Html.ValidationMessageFor(x => x.TopCategoryName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        IsHaveRooms
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.IsShowRooms, new[] {
+                    new SelectListItem() {Text = "Yes", Value = "true"},
+                    new SelectListItem() {Text = "No", Value = "false"}}, "Not Specified")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        IsHaveSubCategory
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.IsShowSubCategory, new[] {
+                    new SelectListItem() {Text = "Yes", Value = "true"},
+                    new SelectListItem() {Text = "No", Value = "false"}}, "Not Specified")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        IsFurnishedOption
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.IsShowFurnished, new[] {
+                    new SelectListItem() {Text = "Yes", Value = "true"},
+                    new SelectListItem() {Text = "No", Value = "false"}}, "Not Specified")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        IsShowArea
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.IsShowArea, new[] {
+                    new SelectListItem() {Text = "Yes", Value = "true"},
+                    new SelectListItem() {Text = "No", Value = "false"}}, "Not Specified")
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Status
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.IsActive, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Remarks
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Remarks)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button type="submit" class="button">Update</button>
+                    </td>
+                    <td>
+                        <button class="button" onclick="location.href='@Url.Action("Index", "PropertyTopCategories")';return false;">Not Now</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

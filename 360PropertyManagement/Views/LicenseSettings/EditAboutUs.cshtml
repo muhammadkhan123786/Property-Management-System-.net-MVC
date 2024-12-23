@@ -1,0 +1,33 @@
+﻿@model _360PropertyManagement.ViewModels.AboutUsViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:140px;">
+    @using (Html.BeginForm("EditAboutUs", "LicenseSettings",
+FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            <div style="background-color:black; color:white;">About Us </div>
+            <div style="font-family: Georgia; text-decoration: solid;" class="editor-field">@Html.TextAreaFor(x => x.AboutUs)</div><br />
+            <div style="background-color:black; color:white;">Mission Statement </div>
+            <div style="font-family: Georgia; text-decoration: solid;" class="editor-field">@Html.TextAreaFor(x => x.MissionStatement)</div><br />
+            <div style="background-color:black; color:white;">Vision Statement </div>
+            <div style="font-family: Georgia; text-decoration: solid;" class="editor-field">@Html.TextAreaFor(x => x.VisionStatement)</div><br />
+            <div style="margin-left:100px;">
+                <button type="submit" class="button">Update</button>
+                @Html.ActionLink("Back", "Index", null, new { @class = "button" })
+            </div>
+
+        </div>
+    }
+</div>

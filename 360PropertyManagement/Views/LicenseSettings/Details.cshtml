@@ -1,0 +1,96 @@
+﻿@model _360PropertyManagement.Models.LicenseFees
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:80px;">
+    @Html.Partial("SuperAdminView")
+</div>
+<div style="margin-top:60px;">
+    <table>
+        <tr>
+            <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                Payment Details
+            </th>
+        </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.License.LicenseTitle, "License Number")
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.License.LicenseTitle)
+            </td>
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.License.AnnualFee, "Annual Fee")
+            </td>
+            <td>
+                @Convert.ToDecimal(Model.License.AnnualFee).ToString("#,##0.00")
+            </td>
+            <td style="background-color: black; color:white;">
+               @Html.LabelFor(x => x.LicenseFeePerYear, "Gross Total")
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.LicenseFeePerYear)
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.Discount, "Discount")
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.Discount)
+            </td>
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.DomainandHostingFee, "Domain & Hosting Fee")
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.DomainandHostingFee)
+            </td>
+
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.TotalPaid, "Total Bill")
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.TotalPaid)
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.ReceivingDate, "Payment Received On")
+            </td>
+            <td>
+                @Model.ReceivingDate.ToLongDateString()
+            </td>
+
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.EnteringDate, "Payment Enter On")
+            </td>
+            <td>
+                @Model.EnteringDate.ToLongDateString()
+            </td>
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.LicenseFeeForYears, "Fee For Years")
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.LicenseFeeForYears)
+            </td>
+    
+         </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                @Html.LabelFor(x => x.Status, "Status")
+            </td>
+            <td>
+                @(Model.Status ? "Paid" : "Not-Paid")
+            </td>
+            <td style="float:right;">
+                @Html.ActionLink("Back", "LicensePayments", new { id = Model.LicenseId }, new { @class = "button" })
+            </td>
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,189 @@
+﻿@model _360PropertyManagement.ViewModels.CustomAddressProfileViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        
+        $('#CountryId').change(function () {
+            var selectedItem = $(this).val();
+            if (selectedItem > 0) {
+                $('#StatesDivID').show();
+            }
+            else {
+                $('#StatesDivID').hide();
+            }
+
+            var ddlStates = $("#StateId");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url:"@(Url.Action("StateList", "CustomProfileHandler"))",
+                data: { "CountryId": selectedItem },
+                success: function (data) {
+                    ddlStates.html('');
+                    ddlStates.append("<option value='' selected='selected'>Select State</option>");
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+                    statesProgress.hide();
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#SubmitID').hide();
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+
+                },
+
+
+            });
+
+
+        });
+
+            });
+
+
+
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+      
+        $('#StateId').change(function () {
+            var selectedItem = $(this).val();
+            if (selectedItem > 0) {
+                $('#CityDivID').show();
+            }
+            else {
+                $('#CityDivID').hide();
+            }
+
+            var ddlCity = $("#CityId");
+            var CityProgress = $("#City-loading-progress");
+            CityProgress.show();
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url:"@(Url.Action("CityList", "CustomProfileHandler"))",
+                data: { "StateId": selectedItem },
+            success: function (data) {
+                ddlCity.html('');
+                ddlCity.append("<option value='' selected='selected'>Select City</option>");
+                $.each(data, function (id, option) {
+                    ddlCity.append($('<option></option>').val(option.id).html(option.name));
+
+                });
+                CityProgress.hide();
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#SubmitID').hide();
+                alert('Failed to retrieve states.');
+                statesProgress.hide();
+
+            },
+
+
+            });
+
+
+    });
+
+    });
+
+</script>
+
+@{
+    ViewBag.Title = "Add my address";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div style="margin-top:-50px;">
+    @Html.Partial("_UserMenus")
+</div>
+@using (Html.BeginForm("ProfileAddressEdit", "CustomProfileHandler",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div style="width:500px;margin-left:300px; border:thick;">
+      <div style="width:500px; background-color:black; color:white; text-align:center;">My Address Details</div>
+        <table style="width:500px;">
+            <tr>
+                <td>
+                    Address One*
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.AddressOne)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Address Two
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.AddressTwo)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Country*
+                </td>
+                <td>
+                    @Html.DropDownList("CountryId", "Select Country")
+                    @Html.ValidationMessageFor(x => x.CountryId)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    State*
+                </td>
+                <td id="StatesDivID">
+                    @Html.DropDownList("StateId", "Select State")
+                    @Html.ValidationMessageFor(x => x.StateId)
+                    <span id="states-loading-progress" style="display: none;">Please wait..</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    City*
+                </td>
+                <td id="CityDivID">
+                    @Html.DropDownList("CityId", "Select City")
+                    <span id="City-loading-progress" style="display: none;">Please wait..</span>
+                    @Html.ValidationMessageFor(x => x.CityId)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Status
+                </td>
+                <td>
+                    @Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="button">Update</button>
+                </td>
+                <td>
+                    <button class="button" onclick="location.href='@Url.Action("MyDashBoard", "Account")';return false;">Not Now</button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+}

@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.Countries>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetAccounts")',
+            minLength: 2
+
+
+        });
+
+    });
+</script>
+@{
+    var db = new Context();
+    
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+
+    <div class="page-wrap">
+
+        <div style="height:30px;">
+            <div style="float:left; padding-left:30px; padding-top:20px; font-size:20px;">
+                @Html.ActionLink("Add New Country", "Add", null, new { @class = "util_icon_new" })
+            </div>
+
+            <div style="float:right; padding-right:30px;">
+                Search Country @using (Html.BeginForm("Index", "Country", FormMethod.Get))
+                {
+
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+                }
+            </div>
+
+        </div>
+
+        <table>
+
+            <tr>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Country Name
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Country Status
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+            </tr>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="img1-icon">
+                        @Html.DisplayFor(modelitem => item.CountryName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CountryId }, new { @class = "util_icon_edit" }) |
+                        @Html.ActionLink("View Ads Added", "ViewAdsByCountry", new { id = item.CountryId })|
+                        @Html.ActionLink("Details", "Details", new { id = item.CountryId }, new { @class = "util_icon_view" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CountryId })|
+
+                    </td>
+                </tr>
+
+
+            }
+
+        </table>
+        <div style="padding-left:15px; padding-top:15px;">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,103 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.LicenseProduct>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetAccounts")',
+            minLength: 2
+
+
+        });
+
+    });
+</script>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:80px;">
+    @Html.Partial("SuperAdminView")
+</div>
+<div style="margin-top:130px;" class="page-wrap">
+
+    <div style="height:30px;">
+        <div style="float:left; padding-left:30px; padding-top:20px; font-size:20px;">
+            @Html.ActionLink("Add License", "Add", null, new { @class = "util_icon_new" })
+        </div>
+
+        <div style="float:right; padding-right:30px;">
+            Search License @using (Html.BeginForm("Index", "SuperAdminLicense", FormMethod.Get))
+            {
+
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+            }
+        </div>
+
+    </div>
+
+    <table>
+
+        <tr>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                Company Name
+            </td>
+
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                License Number
+            </td>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                Created On
+            </td>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+               Expires On
+            </td>
+
+
+            <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="img1-icon">
+                    @Html.DisplayFor(modelitem => item.CompanyName)
+                </td>
+                <td class="img1-icon">
+                    @Html.DisplayFor(modelitem => item.LicenseTitle)
+                </td>
+                <td class="img1-icon">
+                    @Html.DisplayFor(modelitem => item.Createdon)
+                </td>
+                <td class="img1-icon">
+                    @Html.DisplayFor(modelitem => item.ExpireOn)
+                </td>
+                <td>
+                    @Html.ActionLink("Change Logo", "ChangeCompanyLogo", new { id = item.ImageId })|
+                    @Html.ActionLink("Edit Details", "EditLicense", new { id = item.LicenseId })|
+                    @Html.ActionLink("Add License Fee", "AddLicenseFee", new { id = item.LicenseId })|
+                    @Html.ActionLink("View Payments", "SuperLicensePayments", "SuperAdminLicense", new { id = item.LicenseId }, null)|
+                </td>
+            </tr>
+
+
+        }
+
+    </table>
+    <div style="padding-left:15px; padding-top:15px;">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

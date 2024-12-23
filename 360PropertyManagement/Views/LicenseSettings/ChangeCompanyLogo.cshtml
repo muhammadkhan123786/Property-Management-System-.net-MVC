@@ -1,0 +1,61 @@
+﻿@model _360PropertyManagement.ViewModels.ImageUploader
+@using _360PropertyManagement.Models;
+
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript">
+    function readfile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+@{
+    ViewBag.Title = "Change Company Logo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:140px;">
+
+    <div style="margin-top:170px;">
+        @using (Html.BeginForm("ChangeCompanyLogo", "LicenseSettings",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="page-wrap" style="margin-top:-25px;">
+                <table style="margin-top:10px;">
+                    <tr>
+                        <th colspan="5" style="background-color: black; font-weight: bold; color: #fff;">Change Company Logo</th>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            @Html.ValidationMessageFor(x => x.Photo)
+                            <input type='file' id="file1" name="Photo" onchange="readfile(this);" />
+                            <img id="image_preview" src="https://cdn1.iconfinder.com/data/icons/user-pics/512/user_add-512.png" alt="your image" width="70" height="70" />
+                            <p>
+                                <button style="float:left" class="button" type="submit">Update</button>
+                                <button class="button" onclick="location.href='@Url.Action("Index", "LicenseSettings")';return false;">Cancel</button>
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+            </div>
+        }
+
+    </div>
+</div>

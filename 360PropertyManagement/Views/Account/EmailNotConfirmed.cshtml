@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Confirm Email";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:-50px;">
+    @Html.Partial("_PublicMenus")
+</div>
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<div class="main-wrap4" style="margin-top:70px;">
+    <div class="reset-head2" style="text-align:center;">Your email id is not confirm</div>
+
+    <div style="font-size:20px; text-align:center; padding-top:20px;">
+        Do you want new confirmation link? <br />
+        Please @Html.ActionLink("Click here to resend confirmation link", "ConfirmationLink", "Account", routeValues: null, htmlAttributes: new { id = "ConfirmationLink" })    </div>
+
+</div>
+
+
+    

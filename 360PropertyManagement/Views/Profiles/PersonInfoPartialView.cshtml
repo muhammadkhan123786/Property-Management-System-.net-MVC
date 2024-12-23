@@ -1,0 +1,121 @@
+﻿@model _360PropertyManagement.Models.Persons
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).on('click', '#backLink', function () {
+        history.go(-1);
+    });
+</script>
+
+
+@{
+    var db = new Context();
+}
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="margin-top:-50px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="background-color:black; text-align:center; color:white; font-size:medium;">
+    Personal Information
+</div>
+<div style="width:300px; border:solid;">
+    <div style="width:250px; font-size:medium;">
+        @Html.Image(Model.image.Image)<br />
+        @Html.DisplayFor(x => x.PersonFullName)<br />
+        @Html.DisplayFor(x => x.account.AccountEmailId)<br />
+        <a href="javascript:void(0);" onclick="history.go(-1);">Back to Profile</a>
+
+    </div>
+</div>
+<div style="width:300px; border:solid;">
+
+</div>
+<div style="width: 850px; border:solid; margin-left: 302px; margin-top: -198px;">
+    <table style="width:850px;">
+        <tr>
+            <td style="font-size:medium;">
+                Person First Name
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.PersonFirstName)
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Person Middle Name
+            </td>
+            @if (Model.PersonMiddleName == null)
+            {
+                <td>
+                    Middle Name Not Available
+                </td>
+            }
+
+            @if (Model.PersonMiddleName != null)
+            {
+                <td>
+                    @Html.DisplayFor(x => x.PersonMiddleName)
+                </td>
+
+            }
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Person Last Name
+            </td>
+            @if (Model.PersonLastName == null)
+            {
+                <td>Last Name Not Available</td>
+            }
+            @if (Model.PersonLastName != null)
+            {
+                <td>@Html.DisplayFor(x => x.PersonLastName)</td>
+            }
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Gender
+            </td>
+            @if (Model.GenderId == null)
+            {
+                <td>Gender Not Available</td>
+            }
+            @if (Model.GenderId != null)
+            {
+                <td>@Html.DisplayFor(x => x.gender.GenderName)</td>
+            }
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Occupation
+            </td>
+            @if (Model.OccupationId == null)
+            {
+                <td>Occupation Not Available</td>
+            }
+            @if (Model.OccupationId != null)
+            {
+                <td>@Html.DisplayFor(x => x.occupation.OccupationName)</td>
+            }
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Status
+            </td>
+            <td>
+                @(Model.Status ? "Active" : "In-Active")
+            </td>
+        </tr>
+
+    </table>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

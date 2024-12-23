@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Confirm Email";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:73px;">
+    @Html.Partial("_PublicMenus")
+</div>
+
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<div class="main-wrap4" style="margin-top:70px; margin-left:150px;">
+    <div class="reset-head2" style="text-align:center;">Your email have been confirmed</div>
+
+
+    <div style="font-size:20px; text-align:center; padding-top:20px;">
+        Thank you for confirming your email. <br />
+        Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </div>
+
+</div>
+
+    

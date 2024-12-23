@@ -1,0 +1,66 @@
+﻿@model _360PropertyManagement.ViewModels.ContactViewModel
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "EditContactInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("EditContactInfo", "Contact",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="page-wrap" style="margin-top:-40px;">
+            <div class="reset-head1" style="margin-top:50px; width:auto;">Edit contact info</div>
+            <table style="margin-top:20px;">
+
+                <tr>
+                    <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                        Contact Information
+                    </th>
+                </tr>
+
+
+                <tr>
+                    <td>Mobile One*:@Html.TextBoxFor(x => x.MobileOne)</td>
+                    <td>Mobile Two: @Html.TextBoxFor(x => x.MobileTwo)</td>
+                    <td>Phone One: @Html.TextBoxFor(x => x.PhoneOne)</td>
+                    <td>Phone Two: @Html.TextBoxFor(x => x.PhoneTwo)</td>
+                    <td>Website: @Html.TextBoxFor(x => x.Website)</td>
+                    <td>
+                        Status:@Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                        <p> @Html.ValidationMessageFor(x => x.MobileOne)</p>
+                        <p>@Html.ValidationMessageFor(x => x.MobileTwo)</p>
+                        <p>@Html.ValidationMessageFor(x => x.PhoneOne)</p>
+                        <p>@Html.ValidationMessageFor(x => x.PhoneTwo)</p>
+                        <p>@Html.ValidationMessageFor(x => x.Status)</p>
+                        <p>@Html.ValidationMessageFor(x => x.Website)</p>
+                        <p>@Html.ValidationSummary()</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div class="new-but">
+                            <button style="float:right" type="submit" class="button">Update</button>
+                            <button class="button" onclick="location.href='@Url.Action("Index", "Contact")';return false;">Cancel</button>
+                        </div>
+
+                    </td>
+
+
+
+                </tr>
+            </table>
+        </div>
+    }
+
+</div>

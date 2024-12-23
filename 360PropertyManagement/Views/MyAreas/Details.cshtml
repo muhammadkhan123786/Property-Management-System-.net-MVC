@@ -1,0 +1,95 @@
+﻿@model _360PropertyManagement.Models.MyAreas
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@{
+    var db = new Context();
+
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:170px;">
+
+    <div style="width:500px;margin-left:300px; border:thick;">
+        <div style="width:500px; background-color:black; color:white; text-align:center;">My Area Details</div>
+        <table style="width:500px;">
+            <tr>
+                <td>
+                   Area Name
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.Location)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Country Name
+                </td>
+                  <td>
+                        @Html.DisplayFor(m => m.country.CountryName)
+                    </td>
+              
+            </tr>
+            <tr>
+                <td>
+                    State Name
+                </td>
+                    <td>
+                        @Html.DisplayFor(x=>x.state.StateName)
+                    </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    City Name
+                </td>
+                    <td>
+                        @Html.DisplayFor(x=>x.city.CityName)
+                    </td>
+                
+            </tr>
+            <tr>
+                <td>
+                   Created On
+                </td>
+                    <td>
+                        @Html.DisplayFor(m => m.DateNTime)
+                    </td>
+              
+            </tr>
+            <tr>
+                <td>
+                    Status
+                </td>
+                <td>
+                    @(Model.IsActive ? "Active" : "In-Active")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=Model.MyAreaId})
+                </td>
+                <td>
+                    @Html.ActionLink("Back", "Index")
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

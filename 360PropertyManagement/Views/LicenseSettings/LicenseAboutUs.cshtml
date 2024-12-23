@@ -1,0 +1,30 @@
+﻿@model _360PropertyManagement.ViewModels.AboutUsViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_AdminView")
+</div>
+<div style="margin-top:150px;">
+
+    <div>
+        <div style="background-color:black; color:white;">About Us </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFormattedData(Model.AboutUs)</div><br />
+        <div style="background-color:black; color:white;">Mission Statement </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFormattedData(Model.MissionStatement)</div><br />
+        <div style="background-color:black; color:white;">Vision Statement </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFormattedData(Model.VisionStatement)</div><br />
+        <div style="margin-left:100px;">
+            @Html.ActionLink("Edit About Us", "EditAboutUs", new { id = Model.LicenseId }, new { @class = "button" })
+            @Html.ActionLink("Back", "Index", null, new { @class = "button" })
+        </div>
+
+    </div>
+
+</div>

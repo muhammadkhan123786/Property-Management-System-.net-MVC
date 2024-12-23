@@ -1,0 +1,118 @@
+﻿@model _360PropertyManagement.Models.Contacts
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).on('click', '#backLink', function () {
+        history.go(-1);
+    });
+</script>
+@{
+    var db = new Context();
+}
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="margin-top:-50px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="background-color:black; text-align:center; color:white; font-size:medium;">
+    Contact Details
+</div>
+<div style="width:300px; border:solid;">
+    <div style="width:250px; font-size:medium;">
+        @Html.Image(Model.person.image.Image)<br />
+        @Html.DisplayFor(x => x.person.PersonFullName)<br />
+        @Html.DisplayFor(x => x.person.account.AccountEmailId)<br />
+        <a href="javascript:void(0);" onclick="history.go(-1);">Back to Profile</a>
+        
+    </div>
+    </div>
+<div style="width:300px; border:solid;">
+
+</div>
+<div style="width: 850px; border:solid; margin-left: 302px; margin-top: -198px;">
+    <table style="width:850px;">
+        <tr>
+            <td style="font-size:medium;">
+                Mobile One
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.MobileOne)
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Mobile Number Two
+            </td>
+         @if (Model.MobileTwo == null)
+         {
+            <td>
+                   Mobile Number Not Available
+               </td> 
+         }
+            
+      @if (Model.MobileTwo != null) { 
+      <td>
+        @Html.DisplayFor(x=>x.MobileTwo)
+    </td>
+    
+      }
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Phone Number One
+            </td>
+            @if (Model.PhoneOne == null)
+            {
+               <td>Number Not Available</td> 
+            }
+            @if(Model.PhoneOne!=null)
+            {
+                <td>@Html.DisplayFor(x=>x.PhoneOne)</td>
+            }
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Phone Number Two
+            </td>
+            @if (Model.PhoneTwo == null)
+            {
+                <td>Number Not Available</td>
+            }
+            @if (Model.PhoneTwo != null)
+            {
+                <td>@Html.DisplayFor(x => x.PhoneTwo)</td>
+            }
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Website
+            </td>
+            @if (Model.Website == null)
+            {
+                <td>Website Not Available</td>
+            }
+            @if (Model.Website != null)
+            {
+                <td>@Html.DisplayFor(x => x.Website)</td>
+            }
+        </tr>
+        <tr>
+            <td style="font-size:medium;">
+                Status
+            </td>
+            <td>
+                @(Model.Status?"Active":"In-Active")
+            </td>
+        </tr>
+
+    </table>
+</div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

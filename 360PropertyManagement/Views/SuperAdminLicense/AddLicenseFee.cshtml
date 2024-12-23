@@ -1,0 +1,102 @@
+﻿@model _360PropertyManagement.ViewModels.AddPaymentViewmodel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Add State";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("SuperAdminView")
+</div>
+<div style="margin-top:120px;">
+    @using (Html.BeginForm("AddLicenseFee", "SuperAdminLicense",
+FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="main-wrap" style="margin-top:0px; width:400px; margin-left:400px; height:550px;">
+            <div class="reset-head1" style="width:400px;">Add License Fee</div>
+            <div class="child-main1">
+                <div class="form-group">
+                    Enter License Fee*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.LicenseFeePerYear, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.LicenseFeePerYear)
+                    </div>
+                    @Html.ValidationSummary(true)
+                </div>
+                <div class="form-group">
+                    Enter Fee For Years
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.LicenseFeeForYears, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.LicenseFeeForYears)
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    Domain & Hosting Fee*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.DomainandHostingFee, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.DomainandHostingFee)
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    Discount*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Discount, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.Discount)
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    Receiving Date*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.ReceivingDate, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.ReceivingDate)
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    Payment Status*
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(x => x.PaymentStatus, new[] {
+                    new SelectListItem() {Text = "Paid", Value = "true"},
+                    new SelectListItem() {Text = "Not Paid", Value = "false"}}, "Not Specified")
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.PaymentStatus)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="button">Add</button>
+                        <button class="button" onclick="location.href='@Url.Action("Index", "SuperAdminLicense")';return false;">Cancel</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    @Scripts.Render("~/bundles/jquery")
+
+
+</div>

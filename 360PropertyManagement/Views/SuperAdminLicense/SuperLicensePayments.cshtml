@@ -1,0 +1,144 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.LicenseFees>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetAccounts")',
+            minLength: 2
+
+
+        });
+
+    });
+</script>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:73px;">
+    @Html.Partial("SuperAdminView")
+</div>
+@{
+    var db = new Context();
+    var license = db.LicenseProduct.Where(x => x.Status == true).SingleOrDefault();
+}
+<div style="width: 330px; float: right; margin-top:80px;">
+    <table>
+        <tr>
+            <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">License Details</th>
+        </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                Next Due Date
+            </td>
+            <td style="font-family:Georgia;">
+                @license.ExpireOn.ToLongDateString()
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                Annual Fee
+            </td>
+            <td style="font-family:Georgia;">
+                @Convert.ToDecimal(license.AnnualFee).ToString("#,##0.00")
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                License Created On
+            </td>
+            <td style="font-family:Georgia;">
+                @license.Createdon.ToLongDateString()
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                Business Name
+            </td>
+            <td style="font-family:Georgia;">
+                @license.CompanyName
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: black; color:white;">
+                License Status
+            </td>
+            <td style="font-family:Georgia;">
+                @(license.Status ? "Active" : "In-Active")
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div class="page-wrap" style="width:800px;">
+
+    <div style="height:30px;">
+        <div style="float:right; padding-right:30px;">
+            Search Fee @using (Html.BeginForm("LicensePayments", "LicenseSettings", FormMethod.Get))
+            {
+
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+            }
+        </div>
+
+    </div>
+
+    <table>
+
+        <tr>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                License Number
+            </td>
+
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                Total Payment
+            </td>
+            <td style="background-color: black; font-weight: bold; color: #fff;">
+                Payment Paid Date
+            </td>
+            <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="img1-icon">
+                    @Html.DisplayFor(modelitem => item.License.LicenseTitle)
+                </td>
+                <td class="img1-icon">
+                    @Html.DisplayFor(modelitem => item.TotalPaid)
+                </td>
+                <td class="img1-icon">
+                    @Html.DisplayFor(modelitem => item.ReceivingDate)
+                </td>
+
+                <td>
+
+                    @Html.ActionLink("Edit", "FeeEdit", new { id = item.LicenseFeeId }, new { @class = "util_icon_view" }) |
+
+
+                </td>
+            </tr>
+
+
+        }
+
+    </table>
+    <div style="padding-left:15px; padding-top:15px;">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

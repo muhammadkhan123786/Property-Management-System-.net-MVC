@@ -1,0 +1,568 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{46DCA7BB-31E8-42DA-96DA-358797CCE34F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>_360PropertyManagement</RootNamespace>
+    <AssemblyName>360PropertyManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mvc.Mailer">
+      <HintPath>..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\MyLocations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\AdminAccountController.cs" />
+    <Compile Include="Controllers\AdsSubmittedController.cs" />
+    <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Controllers\CustomProfileHandlerController.cs" />
+    <Compile Include="Controllers\GenderController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LicenseSettingsController.cs" />
+    <Compile Include="Controllers\MyAreasController.cs" />
+    <Compile Include="Controllers\MyLocationsController.cs" />
+    <Compile Include="Controllers\OccupationController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\ProfilesController.cs" />
+    <Compile Include="Controllers\PropertyTopCategoriesController.cs" />
+    <Compile Include="Controllers\StatesController.cs" />
+    <Compile Include="Controllers\SuperAdminLicenseController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountPermissions.cs" />
+    <Compile Include="Models\Accounts.cs" />
+    <Compile Include="Models\AdAgents.cs" />
+    <Compile Include="Models\Addresses.cs" />
+    <Compile Include="Models\Cities.cs" />
+    <Compile Include="Models\Contacts.cs" />
+    <Compile Include="Models\Context.cs" />
+    <Compile Include="Models\Countries.cs" />
+    <Compile Include="Models\Extensions.cs" />
+    <Compile Include="Models\FormsAuthenticationService.cs" />
+    <Compile Include="Models\Genders.cs" />
+    <Compile Include="Models\ImageNot.cs" />
+    <Compile Include="Models\Images.cs" />
+    <Compile Include="Models\LatestNews.cs" />
+    <Compile Include="Models\LicenseFees.cs" />
+    <Compile Include="Models\LicenseProduct.cs" />
+    <Compile Include="Models\MsgConversation.cs" />
+    <Compile Include="Models\MsgDetails.cs" />
+    <Compile Include="Models\MsgReceiver.cs" />
+    <Compile Include="Models\MsgSender.cs" />
+    <Compile Include="Models\MyAreas.cs" />
+    <Compile Include="Models\MyAreasAdss.cs" />
+    <Compile Include="Models\Occupations.cs" />
+    <Compile Include="Models\Persons.cs" />
+    <Compile Include="Models\Profiles.cs" />
+    <Compile Include="Models\PropertyAds.cs" />
+    <Compile Include="Models\PropertyRooms.cs" />
+    <Compile Include="Models\PropertySizeMeasured.cs" />
+    <Compile Include="Models\PropertySubCategories.cs" />
+    <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\RolesPermissions.cs" />
+    <Compile Include="Models\SaveAd.cs" />
+    <Compile Include="Models\SendEmails.cs" />
+    <Compile Include="Models\SendMessages.cs" />
+    <Compile Include="Models\States.cs" />
+    <Compile Include="Models\SubmitedAds.cs" />
+    <Compile Include="Models\TopCategory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AboutUsViewModel.cs" />
+    <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\AddPaymentViewmodel.cs" />
+    <Compile Include="ViewModels\AddressViewModel.cs" />
+    <Compile Include="ViewModels\AddViewModel.cs" />
+    <Compile Include="ViewModels\AdsFilterViewModel.cs" />
+    <Compile Include="ViewModels\AdsViewModel.cs" />
+    <Compile Include="ViewModels\BulkEmailsViewModel.cs" />
+    <Compile Include="ViewModels\ChangePasswordViewmodel.cs" />
+    <Compile Include="ViewModels\CityViewModel.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
+    <Compile Include="ViewModels\CountriesViewModel.cs" />
+    <Compile Include="ViewModels\CountryDisplayViewModel.cs" />
+    <Compile Include="ViewModels\CustomAddressProfileViewModel.cs" />
+    <Compile Include="ViewModels\EditAddressViewModel.cs" />
+    <Compile Include="ViewModels\EditPersonalInfoViewModel.cs" />
+    <Compile Include="ViewModels\EditPersonWithoutAccount.cs" />
+    <Compile Include="ViewModels\EmailSendViewModel.cs" />
+    <Compile Include="ViewModels\FilterAdsBusinessLogic.cs" />
+    <Compile Include="ViewModels\ForGetViewModelPassword.cs" />
+    <Compile Include="ViewModels\GenderViewModel.cs" />
+    <Compile Include="ViewModels\ImageUploader.cs" />
+    <Compile Include="ViewModels\ImageViewModel.cs" />
+    <Compile Include="ViewModels\LicenseAddressViewModel.cs" />
+    <Compile Include="ViewModels\LicenseContactInfo.cs" />
+    <Compile Include="ViewModels\LicenseDetailsViewmodel.cs" />
+    <Compile Include="ViewModels\LicenseEditViewModel.cs" />
+    <Compile Include="ViewModels\LicensePersonViewModel.cs" />
+    <Compile Include="ViewModels\LicenseViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MessageReadViewmodel.cs" />
+    <Compile Include="ViewModels\MsgReplyViewModle.cs" />
+    <Compile Include="ViewModels\MyAreasViewmodel.cs" />
+    <Compile Include="ViewModels\OccupationViewModel.cs" />
+    <Compile Include="ViewModels\PasswordResetViewModel.cs" />
+    <Compile Include="ViewModels\RolesPermissionsViewmodel.cs" />
+    <Compile Include="ViewModels\PersonViewModel.cs" />
+    <Compile Include="ViewModels\ProfileChangePaasswordViewmodel.cs" />
+    <Compile Include="ViewModels\ProfileCustomContactViewModel.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\ResendConfirmationViewModel.cs" />
+    <Compile Include="ViewModels\RolesViewModel.cs" />
+    <Compile Include="ViewModels\RoomsViewModel.cs" />
+    <Compile Include="ViewModels\SendBulkMessages.cs" />
+    <Compile Include="ViewModels\SendEmailViaEmailId.cs" />
+    <Compile Include="ViewModels\SendMessageViewModel.cs" />
+    <Compile Include="ViewModels\StateViewModel.cs" />
+    <Compile Include="ViewModels\TopPropertyCategoryViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Template\Customemail.html" />
+    <Content Include="App_Data\Template\EmailTemplate.html" />
+    <Content Include="App_Data\Template\NoticeLicense.html" />
+    <Content Include="App_Data\Template\ResetPasswordEmail.html" />
+    <Content Include="Content\Bilal Css\details.css" />
+    <Content Include="Content\Bilal Css\ListingCss.css" />
+    <Content Include="Content\blHome.gif" />
+    <Content Include="Content\blLogout.gif" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap\js\jquery-1.8.2.js" />
+    <Content Include="Content\css\select2.css" />
+    <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\images\contact-banner %281%2920734266.jpg" />
+    <Content Include="Content\images\contact-banner.jpg" />
+    <Content Include="Content\images\download.jpg" />
+    <Content Include="Content\images\hover.gif" />
+    <Content Include="Content\images\images.jpg" />
+    <Content Include="Content\images\phn.PNG" />
+    <Content Include="Content\images\seperator.gif" />
+    <Content Include="Content\MenusCSS\script.js" />
+    <Content Include="Content\MenusCSS\styles.css" />
+    <Content Include="Content\MySite.css" />
+    <Content Include="Content\PagedList.css" />
+    <None Include="Content\ScriptsSelect2\jquery-2.0.3.intellisense.js" />
+    <Content Include="Content\ScriptsSelect2\jquery-2.0.3.js" />
+    <Content Include="Content\ScriptsSelect2\jquery-2.0.3.min.js" />
+    <None Include="Content\ScriptsSelect2\jquery.validate-vsdoc.js" />
+    <Content Include="Content\ScriptsSelect2\jquery.validate.js" />
+    <Content Include="Content\ScriptsSelect2\jquery.validate.min.js" />
+    <Content Include="Content\ScriptsSelect2\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\ScriptsSelect2\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\ScriptsSelect2\select2.css" />
+    <Content Include="Content\ScriptsSelect2\select2.js" />
+    <Content Include="Content\ScriptsSelect2\select2.min.js" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\stylesVmenus.css" />
+    <Content Include="Content\Verticalstyles.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\ScriptsSelect2\jquery-2.0.3.min.map" />
+    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\i18n\ar.js" />
+    <Content Include="Scripts\i18n\az.js" />
+    <Content Include="Scripts\i18n\bg.js" />
+    <Content Include="Scripts\i18n\ca.js" />
+    <Content Include="Scripts\i18n\cs.js" />
+    <Content Include="Scripts\i18n\da.js" />
+    <Content Include="Scripts\i18n\de.js" />
+    <Content Include="Scripts\i18n\el.js" />
+    <Content Include="Scripts\i18n\en.js" />
+    <Content Include="Scripts\i18n\es.js" />
+    <Content Include="Scripts\i18n\et.js" />
+    <Content Include="Scripts\i18n\eu.js" />
+    <Content Include="Scripts\i18n\fa.js" />
+    <Content Include="Scripts\i18n\fi.js" />
+    <Content Include="Scripts\i18n\fr.js" />
+    <Content Include="Scripts\i18n\gl.js" />
+    <Content Include="Scripts\i18n\he.js" />
+    <Content Include="Scripts\i18n\hi.js" />
+    <Content Include="Scripts\i18n\hr.js" />
+    <Content Include="Scripts\i18n\hu.js" />
+    <Content Include="Scripts\i18n\id.js" />
+    <Content Include="Scripts\i18n\is.js" />
+    <Content Include="Scripts\i18n\it.js" />
+    <Content Include="Scripts\i18n\ja.js" />
+    <Content Include="Scripts\i18n\km.js" />
+    <Content Include="Scripts\i18n\ko.js" />
+    <Content Include="Scripts\i18n\lt.js" />
+    <Content Include="Scripts\i18n\lv.js" />
+    <Content Include="Scripts\i18n\mk.js" />
+    <Content Include="Scripts\i18n\ms.js" />
+    <Content Include="Scripts\i18n\nb.js" />
+    <Content Include="Scripts\i18n\nl.js" />
+    <Content Include="Scripts\i18n\pl.js" />
+    <Content Include="Scripts\i18n\pt-BR.js" />
+    <Content Include="Scripts\i18n\pt.js" />
+    <Content Include="Scripts\i18n\ro.js" />
+    <Content Include="Scripts\i18n\ru.js" />
+    <Content Include="Scripts\i18n\sk.js" />
+    <Content Include="Scripts\i18n\sr-Cyrl.js" />
+    <Content Include="Scripts\i18n\sr.js" />
+    <Content Include="Scripts\i18n\sv.js" />
+    <Content Include="Scripts\i18n\th.js" />
+    <Content Include="Scripts\i18n\tr.js" />
+    <Content Include="Scripts\i18n\uk.js" />
+    <Content Include="Scripts\i18n\vi.js" />
+    <Content Include="Scripts\i18n\zh-CN.js" />
+    <Content Include="Scripts\i18n\zh-TW.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.css" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Confirm.cshtml" />
+    <Content Include="Views\Account\EmailConfirmed.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
+    <Content Include="Views\Account\ConfirmationLink.cshtml" />
+    <Content Include="Views\Account\ForgetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\LinkSent.cshtml" />
+    <Content Include="Views\Account\PasswordChanged.cshtml" />
+    <Content Include="Views\Account\AccountNotExists.cshtml" />
+    <Content Include="Views\Shared\_AdminView.cshtml" />
+    <Content Include="Views\Shared\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Menus.cshtml" />
+    <Content Include="Views\AdminAccount\Index.cshtml" />
+    <Content Include="Views\AdminAccount\Add.cshtml" />
+    <Content Include="Views\AdminAccount\Edit.cshtml" />
+    <Content Include="Views\AdminAccount\Details.cshtml" />
+    <Content Include="Views\AdminAccount\Delete.cshtml" />
+    <Content Include="Views\AdminAccount\SendEmail.cshtml" />
+    <Content Include="Views\AdminAccount\SendSuccessfully.cshtml" />
+    <Content Include="Views\AdminAccount\ChangePassword.cshtml" />
+    <Content Include="Views\AdminAccount\SendMessage.cshtml" />
+    <Content Include="Views\AdminAccount\SendEmailsSuccessfully.cshtml" />
+    <Content Include="Views\AdminAccount\BulkMessages.cshtml" />
+    <Content Include="Views\AdminAccount\MessagesSent.cshtml" />
+    <Content Include="Views\Shared\_PublicMenus.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Contact\Add.cshtml" />
+    <Content Include="Views\Contact\Details.cshtml" />
+    <Content Include="Views\Contact\Delete.cshtml" />
+    <Content Include="Views\Contact\Uploadimage.cshtml" />
+    <Content Include="Views\Contact\ChangeProfileImage.cshtml" />
+    <Content Include="Views\Contact\EditPersonalInfo.cshtml" />
+    <Content Include="Views\Contact\EditContactInfo.cshtml" />
+    <Content Include="Views\AdminAccount\MakeAdmin.cshtml" />
+    <Content Include="Views\AdminAccount\UpdateRole.cshtml" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
+    <Content Include="Views\Contact\AddAccount.cshtml" />
+    <Content Include="Views\Country\Index.cshtml" />
+    <Content Include="Views\Country\Add.cshtml" />
+    <Content Include="Views\Country\Edit.cshtml" />
+    <Content Include="Views\Country\Details.cshtml" />
+    <Content Include="Views\Country\Delete.cshtml" />
+    <Content Include="Views\States\Index.cshtml" />
+    <Content Include="Views\States\Add.cshtml" />
+    <Content Include="Views\States\Edit.cshtml" />
+    <Content Include="Views\States\Details.cshtml" />
+    <Content Include="Views\States\Delete.cshtml" />
+    <Content Include="Views\City\Index.cshtml" />
+    <Content Include="Views\City\Add.cshtml" />
+    <Content Include="Views\City\Edit.cshtml" />
+    <Content Include="Views\City\Details.cshtml" />
+    <Content Include="Views\City\Delete.cshtml" />
+    <Content Include="Views\SuperAdminLicense\Index.cshtml" />
+    <Content Include="Views\Shared\SuperAdminView.cshtml" />
+    <Content Include="Views\SuperAdminLicense\Add.cshtml" />
+    <Content Include="Views\SuperAdminLicense\ChangeCompanyLogo.cshtml" />
+    <Content Include="Views\SuperAdminLicense\EditLicense.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\LicenseSettings\Index.cshtml" />
+    <Content Include="Views\LicenseSettings\ChangeCompanyLogo.cshtml" />
+    <Content Include="Views\SuperAdminLicense\AddLicenseFee.cshtml" />
+    <Content Include="Views\LicenseSettings\LicensePayments.cshtml" />
+    <Content Include="Views\LicenseSettings\Details.cshtml" />
+    <Content Include="Views\SuperAdminLicense\FeeEdit.cshtml" />
+    <Content Include="Views\SuperAdminLicense\SuperLicensePayments.cshtml" />
+    <Content Include="Views\LicenseSettings\LicenseDetails.cshtml" />
+    <Content Include="Views\LicenseSettings\EditDetails.cshtml" />
+    <Content Include="Views\Person\Index.cshtml" />
+    <Content Include="Views\Person\Edit.cshtml" />
+    <Content Include="Views\Person\Details.cshtml" />
+    <Content Include="Views\Person\Delete.cshtml" />
+    <Content Include="Views\Person\ChangeProfileImage.cshtml" />
+    <Content Include="Views\LicenseSettings\LicenseAddress.cshtml" />
+    <Content Include="Views\LicenseSettings\EditAddress.cshtml" />
+    <Content Include="Views\LicenseSettings\LicensePerson.cshtml" />
+    <Content Include="Views\LicenseSettings\EditLicensePersonInfo.cshtml" />
+    <Content Include="Views\LicenseSettings\LicenseContactInfo.cshtml" />
+    <Content Include="Views\LicenseSettings\EditLicenseContactInfo.cshtml" />
+    <Content Include="Views\LicenseSettings\LicenseAboutUs.cshtml" />
+    <Content Include="Views\LicenseSettings\EditAboutUs.cshtml" />
+    <Content Include="Views\Occupation\Index.cshtml" />
+    <Content Include="Views\Occupation\Add.cshtml" />
+    <Content Include="Views\Occupation\Edit.cshtml" />
+    <Content Include="Views\Occupation\Details.cshtml" />
+    <Content Include="Views\Occupation\Delete.cshtml" />
+    <Content Include="Views\Occupation\PersonsByOccupationId.cshtml" />
+    <Content Include="Views\Occupation\SendMessage.cshtml" />
+    <Content Include="Views\Occupation\PersonDetails.cshtml" />
+    <Content Include="Views\Occupation\SendEmail.cshtml" />
+    <Content Include="Views\Occupation\SendBulkEmails.cshtml" />
+    <Content Include="Views\Occupation\SendBulkMessages.cshtml" />
+    <Content Include="Views\Gender\Index.cshtml" />
+    <Content Include="Views\Gender\Add.cshtml" />
+    <Content Include="Views\Gender\Edit.cshtml" />
+    <Content Include="Views\Gender\Details.cshtml" />
+    <Content Include="Views\Gender\Delete.cshtml" />
+    <Content Include="Views\Gender\PersonsByGenderId.cshtml" />
+    <Content Include="Views\Gender\SendMessage.cshtml" />
+    <Content Include="Views\Gender\PersonDetails.cshtml" />
+    <Content Include="Views\Gender\SendEmail.cshtml" />
+    <Content Include="Views\Gender\SendBulkEmails.cshtml" />
+    <Content Include="Views\Gender\SendBulkMessages.cshtml" />
+    <Content Include="Views\Address\Index.cshtml" />
+    <Content Include="Views\Address\Add.cshtml" />
+    <Content Include="Views\Address\Edit.cshtml" />
+    <Content Include="Views\Person\AddAccount.cshtml" />
+    <Content Include="Views\Person\EditWithOutAccount.cshtml" />
+    <Content Include="Views\Person\Add.cshtml" />
+    <Content Include="Views\Address\Details.cshtml" />
+    <Content Include="Views\Address\Delete.cshtml" />
+    <Content Include="Views\Profiles\MessageRead.cshtml" />
+    <Content Include="Views\Profiles\PersonInfoPartialView.cshtml" />
+    <Content Include="Views\Profiles\ContactInfoPartialView.cshtml" />
+    <Content Include="Views\Profiles\AccountMessages.cshtml" />
+    <Content Include="Views\Profiles\AddressInfoPartialView.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ProfilePersonDetails.cshtml" />
+    <Content Include="Views\Shared\_UserMenus.cshtml" />
+    <Content Include="Views\CustomProfileHandler\Index.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ProfileContactDetails.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ProfileAddressDetails.cshtml" />
+    <Content Include="Views\CustomProfileHandler\PersonalPartialView.cshtml" />
+    <Content Include="Views\CustomProfileHandler\PersonalProfileEdit.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ContactPartialView.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ProfileContactEdit.cshtml" />
+    <Content Include="Views\CustomProfileHandler\AddressPartialView.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ProfileAddressEdit.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ChangeProfilePassword.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ChangeProfileImage.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ProfileAccountMessages.cshtml" />
+    <Content Include="Views\CustomProfileHandler\ReadMessage.cshtml" />
+    <Content Include="Views\CustomProfileHandler\Delete.cshtml" />
+    <Content Include="Views\PropertyTopCategories\Index.cshtml" />
+    <Content Include="Views\PropertyTopCategories\Add.cshtml" />
+    <Content Include="Views\PropertyTopCategories\Delete.cshtml" />
+    <Content Include="Views\PropertyTopCategories\Details.cshtml" />
+    <Content Include="Views\PropertyTopCategories\Edit.cshtml" />
+    <Content Include="Views\AdsSubmitted\AdSubmision.cshtml" />
+    <Content Include="Views\CustomProfileHandler\Myads.cshtml" />
+    <Content Include="Views\AdsSubmitted\AddImages.cshtml" />
+    <Content Include="Views\AdsSubmitted\Details.cshtml" />
+    <Content Include="Views\AdsSubmitted\Edit.cshtml" />
+    <Content Include="Views\AdsSubmitted\Delete.cshtml" />
+    <Content Include="Views\MyAreas\Index.cshtml" />
+    <Content Include="Views\MyAreas\Add.cshtml" />
+    <Content Include="Views\Shared\_DetailsLayout.cshtml" />
+    <Content Include="Views\MyAreas\Edit.cshtml" />
+    <Content Include="Views\MyAreas\Details.cshtml" />
+    <Content Include="Views\MyAreas\Delete.cshtml" />
+    <Content Include="Views\Home\TopCategories.cshtml" />
+    <Content Include="Views\Home\Propertiesbycategoryid.cshtml" />
+    <Content Include="Views\Shared\_LicenseSettingsViewPanel.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\AdminAccount\ContactAdd.cshtml" />
+    <Content Include="Views\AdminAccount\PersonAdd.cshtml" />
+    <Content Include="Views\Home\Agents.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50092</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50092/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

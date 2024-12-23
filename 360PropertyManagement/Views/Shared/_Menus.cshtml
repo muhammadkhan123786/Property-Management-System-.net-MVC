@@ -1,0 +1,26 @@
+﻿<!doctype html>
+
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/MenusCSS/styles.css" rel="stylesheet" />
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script src="~/Content/MenusCSS/script.js"></script>
+
+<body>
+    <div id='cssmenu'>
+        <ul>
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Accounts", "Index", "AdminAccount")</li>
+            <li>@Html.ActionLink("Addresses", "Index", "Address")</li>
+            <li>@Html.ActionLink("Country", "Index", "Country")</li>
+            <li>@Html.ActionLink("States", "Index", "States")</li>
+            <li>@Html.ActionLink("Cities", "Index", "City")</li>
+            <li>@Html.ActionLink("Persons", "Index", "Person")</li>
+            <li>@Html.ActionLink("Contacts", "Index", "Contact")</li>
+            <li>@Html.ActionLink("Categories", "Index", "PropertyTopCategories")</li>
+            <li>@Html.ActionLink("My Profile", "Myads", "CustomProfileHandler")</li>
+            <li>@Html.ActionLink("License", "Index", "LicenseSettings")</li>
+        </ul>
+    </div>
+</body>

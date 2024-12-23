@@ -1,0 +1,139 @@
+﻿@model _360PropertyManagement.ViewModels.CityViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#CountryId').change(function () {
+            var selectedItem = $(this).val();
+            var ddlStates = $("#StateId");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url:"@(Url.Action("StateList", "City"))",
+                data: { "CountryId": selectedItem },
+                success: function (data) {
+                    ddlStates.html('');
+                    ddlStates.append("<option value='' selected='selected'>Select State</option>");
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+                    statesProgress.hide();
+                    $('#StatesDivID').show();
+                    $("#StateId").change(function () {
+                        var selectedvalue = $(this).val();
+                        if (selectedvalue > 0) {
+                            $('#SubmitID').show();
+                        }
+                        else {
+                            $('#SubmitID').hide();
+                        }
+
+
+                    });
+                    $('#SubmitID').hide();
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#SubmitID').hide();
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+
+                }
+            });
+
+
+
+        });
+
+
+    });
+
+</script>
+
+
+@{
+    ViewBag.Title = "Add State";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("Edit", "City",
+FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="main-wrap" style="margin-top:20px; width:400px; margin-left:400px;">
+            <div class="reset-head1" style="width:400px;">Create a new City</div>
+            <div class="child-main1">
+                <div class="form-group">
+                    City Name*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.CityName, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.CityName)
+                    </div>
+                    @Html.ValidationSummary(true)
+                </div>
+                <div class="form-group">
+                    Country*
+                    <div class="col-md-10">
+                        @Html.DropDownList("CountryId", null, "Select a Country", new { id = "CountryId" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.CountryId)
+                    </div>
+
+                </div>
+                <span id="states-loading-progress" style="display: none;">Please wait..</span>
+                <div class="form-group" id="StatesDivID">
+                    State*
+                    <div class="col-md-10">
+                        @Html.DropDownList("StateId", "Select a State")
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.StateId)
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    Status*
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.Status)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" id="SubmitID" class="button">Update</button>
+                        <button class="button" onclick="location.href='@Url.Action("Index", "City")';return false;">Cancel</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    @Scripts.Render("~/bundles/jquery")
+
+
+</div>

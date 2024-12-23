@@ -1,0 +1,174 @@
+﻿@model _360PropertyManagement.Models.Contacts
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+@{
+    var db = new Context();
+}
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+
+    <div class="reset-head1" style="margin-top:10px; width:auto;">Details of Contact</div>
+    <table>
+        <tr>
+            <td width="200">
+
+                <table class="pro-img1" height="397">
+                    <tr style="height:40px;"><td style="background: #000; font-weight: bold; color: #fff;">Account Info</td></tr>
+
+                    <tr><td>@Html.Image(Model.person.image.Image)</td></tr>
+
+                    <tr>
+                        <td style="background:#fff;">
+                            @Html.DisplayFor(x => x.person.account.AccountEmailId)
+                            <p>@Html.ActionLink("Change Profile Picture", "ChangeProfileImage", new { id = Model.person.ImageId })</p>
+
+                            @if (Model.person.account.IsDeleted)
+                            {
+                                <p>@Html.ActionLink("Add Account", "AddAccount", "Contact", new { id = Model.ContactId }, null)</p>
+
+                            }
+                            else
+                            {
+                                <p>@Html.ActionLink("Edit Account", "Edit", "AdminAccount", new { id = Model.person.AccountId }, null)</p>
+                            }
+                            <p>@Html.ActionLink("Back", "Index", null, new { @class = "button" })</p>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+            </td>
+
+
+            <td>
+                <table height="397">
+
+                    <tr><td style="background: #000; font-weight: bold; color: #fff;">Personal Info</td></tr>
+
+                    <tr><td> Person Full Name</td></tr>
+
+                    <tr><td style="background:#fff;">@Html.DisplayFor(x => x.person.PersonFullName)</td></tr>
+
+                    <tr><td>Gender</td></tr>
+
+                    <tr><td style="background:#fff;">@Html.DisplayFor(x => x.person.gender.GenderName)</td></tr>
+
+                    <tr><td>Occupation</td></tr>
+
+                    <tr><td style="background:#fff;">@Html.DisplayFor(x => x.person.occupation.OccupationName)</td></tr>
+
+
+                    <tr><td>Status</td></tr>
+
+                    <tr>
+                        <td style="background:#fff;">
+                            @Html.DisplayFor(x => x.Status)
+                        @if (Model.person.IsDeleted)
+                        {
+                            <p>@Html.ActionLink("Add Person", "AddPerson", "Contact", new { id = Model.ContactId }, null)</p>
+
+                        }
+                        else
+                        {
+                            <p>@Html.ActionLink("Edit Personal Info", "EditPersonalInfo", new { id = Model.person.PersonId })</p>
+                        }
+                    </td>
+
+                </tr>
+
+
+            </table>
+
+        </td>
+
+
+        <td>
+
+            <table height="337">
+                <tr style="height:40px;"><td style="background:#000; font-weight:bold; color:#fff;">Contact Info</td></tr>
+
+                <tr><td>Mobile Number One</td></tr>
+
+                <tr><td style="background:#fff;">@Html.DisplayFor(x => x.MobileOne)</td></tr>
+
+                <tr><td>Mobile Number Two</td></tr>
+                @if (Model.MobileTwo == null)
+                {
+                    <tr><td style="background:#fff;">Number Not Available</td></tr>
+                }
+                @if (Model.MobileTwo != null)
+                {
+                    <tr><td style="background:#fff;">@Html.DisplayFor(x => x.MobileTwo)</td></tr>
+                }
+                <tr><td>Phone One</td></tr>
+                @if (Model.PhoneOne == null)
+                {
+                    <tr><td style="background:#fff;">Number Not Available</td></tr>
+                }
+                @if (Model.PhoneOne != null)
+                {
+                    <tr><td style="background:#fff;">@Html.DisplayFor(x => x.PhoneOne)</td></tr>
+                }
+                <tr><td>Phone Two</td></tr>
+                @if (Model.PhoneTwo == null)
+                {
+                    <tr><td style="background:#fff;">Number Not Available</td></tr>
+                }
+                @if (Model.PhoneTwo != null)
+                {
+
+                    <tr><td style="background:#fff;">@Html.DisplayFor(x => x.PhoneTwo)</td></tr>
+                }
+
+                <tr><td>Website</td></tr>
+                @if (Model.Website == null)
+                {
+                    <tr>
+                        <td style="background:#fff;">
+                            Website Not Available
+                            <p>@Html.ActionLink("Edit Contact Info", "EditContactInfo", new { id = Model.ContactId })</p>
+                        </td>
+                    </tr>
+
+                }
+                @if (Model.Website != null)
+                {
+                    <tr>
+                        <td style="background:#fff;">
+                            @Html.DisplayFor(x => x.Website)
+                        <p>@Html.ActionLink("Edit Contact Info", "EditContactInfo", new { id = Model.ContactId })</p>
+                    </td>
+                </tr>
+                }
+
+
+            </table>
+
+        </td>
+
+    </tr>
+
+
+
+</table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+</div>
+
+
+

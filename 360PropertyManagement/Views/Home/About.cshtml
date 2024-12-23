@@ -1,0 +1,27 @@
+﻿@model _360PropertyManagement.ViewModels.AboutUsViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:80px;">
+    @Html.Partial("_PublicMenus")
+</div>
+<div style="margin-top:95px;">
+    <div>
+        <img src="~/Content/images/contact-banner.jpg">
+    </div>
+    <div>
+        <div style="background-color:black; color:white;">About Us </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFormattedData(Model.AboutUs)</div><br />
+        <div style="background-color:black; color:white;">Mission Statement </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFormattedData(Model.MissionStatement)</div><br />
+        <div style="background-color:black; color:white;">Vision Statement </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFormattedData(Model.VisionStatement)</div><br />
+    </div>
+
+</div>

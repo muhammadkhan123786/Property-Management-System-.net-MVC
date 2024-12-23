@@ -1,0 +1,235 @@
+﻿@model _360PropertyManagement.ViewModels.AddressViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript">
+    function readfile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function readlogo(pics) {
+        if (pics.files && pics.files[0]) {
+            var logoreader = new FileReader();
+
+            logoreader.onload = function (e) {
+                $('#logoimage_preview').attr('src', e.target.result);
+            }
+
+            logoreader.readAsDataURL(pics.files[0]);
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#StatesDivID').hide();
+        $('#CountryId').change(function () {
+            var selectedItem = $(this).val();
+            if (selectedItem > 0) {
+                $('#StatesDivID').show();
+            }
+            else {
+                $('#StatesDivID').hide();
+            }
+
+            var ddlStates = $("#StateId");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url:"@(Url.Action("StateList", "Address"))",
+                data: { "CountryId": selectedItem },
+                success: function (data) {
+                    ddlStates.html('');
+                    ddlStates.append("<option value='' selected='selected'>Select State</option>");
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                    });
+                    statesProgress.hide();
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#SubmitID').hide();
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+
+                },
+
+
+            });
+
+
+        });
+
+            });
+
+
+
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#CityDivID').hide();
+        $('#StateId').change(function () {
+            var selectedItem = $(this).val();
+            if (selectedItem > 0) {
+                $('#CityDivID').show();
+            }
+            else {
+                $('#CityDivID').hide();
+            }
+
+            var ddlCity = $("#CityId");
+            var CityProgress = $("#City-loading-progress");
+            CityProgress.show();
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url:"@(Url.Action("CityList", "Address"))",
+                data: { "StateId": selectedItem },
+            success: function (data) {
+                ddlCity.html('');
+                ddlCity.append("<option value='' selected='selected'>Select City</option>");
+                $.each(data, function (id, option) {
+                    ddlCity.append($('<option></option>').val(option.id).html(option.name));
+
+                });
+                CityProgress.hide();
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#SubmitID').hide();
+                alert('Failed to retrieve states.');
+                statesProgress.hide();
+
+            },
+
+
+            });
+
+
+    });
+
+    });
+
+</script>
+
+@{
+    ViewBag.Title = "Add New Address";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("Add", "Address",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="page-wrap" style="margin-top:-40px;">
+            <div class="reset-head1" style="margin-top:50px; width:auto;">Create an Address</div>
+            <table style="margin-top:10px;">
+                <tr>
+                    <th colspan="5" style="background-color: black; font-weight: bold; color: #fff;">
+                        Personal Info
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        First Name*:@Html.TextBoxFor(x => x.PersonFirstName)
+                        @Html.ValidationMessageFor(x => x.PersonFirstName)
+
+                    </td>
+
+                    <td>
+                        Second Name: @Html.TextBoxFor(x => x.PersonMiddleName)
+                        @Html.ValidationMessageFor(x => x.PersonMiddleName)
+                    </td>
+                    <td>
+                        Last Name: @Html.TextBoxFor(x => x.PersonLastName)
+                        @Html.ValidationMessageFor(x => x.PersonLastName)
+                    </td>
+                    <td>Gender: @Html.DropDownList("GenderId", "Select Gender")</td>
+                    <p>@Html.ValidationMessageFor(x => x.GenderId)</p>
+                    <td>Occupation: @Html.DropDownList("OccupationId", "Select Person Occupation")</td>
+                    <p>@Html.ValidationMessageFor(x => x.OccupationId)</p>
+                    <p>@Html.ValidationSummary()</p>
+
+                </tr>
+
+            </table>
+            <table>
+                <tr>
+                    <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                        Address Info
+                    </th>
+
+                </tr>
+                <tr>
+                    <td>
+                        Office Address*@Html.TextBoxFor(x => x.AddressOne)
+                        @Html.ValidationMessageFor(x => x.AddressOne)
+                    </td>
+                    <td>
+                        Address Two(Optional)@Html.TextBoxFor(x => x.AddressTwo)
+                        @Html.ValidationMessageFor(x => x.AddressTwo)
+                    </td>
+                    <td>
+                        Country @Html.DropDownList("CountryId", "Select Country")
+                        @Html.ValidationMessageFor(x => x.CountryId)
+                    </td>
+                    <td id="StatesDivID">
+                        State @Html.DropDownList("StateId", "Select State")
+                        @Html.ValidationMessageFor(x => x.StateId)
+                        <span id="states-loading-progress" style="display: none;">Please wait..</span>
+                    </td>
+                    <td id="CityDivID">
+                        City @Html.DropDownList("CityId", "Select City")
+                        <span id="City-loading-progress" style="display: none;">Please wait..</span>
+                        @Html.ValidationMessageFor(x => x.CityId)
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <input type='file' id="file1" name="Photo" onchange="readfile(this);" />
+                        <img id="image_preview" alt="your image" width="50" height="50" />
+
+                    </td>
+                    <td>
+                        Status:@Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                    </td>
+                    <td>
+                        <button type="submit" class="button">Add</button>
+                        <button class="button" onclick="location.href='@Url.Action("Index", "Address")';return false;">Cancel</button>
+                    </td>
+
+                </tr>
+            </table>
+
+        </div>
+
+
+    }
+
+</div>

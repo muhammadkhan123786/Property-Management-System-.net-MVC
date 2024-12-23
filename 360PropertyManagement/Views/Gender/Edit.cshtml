@@ -1,0 +1,57 @@
+﻿@model _360PropertyManagement.ViewModels.GenderViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Edit Gender";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div style="margin-top:-50px;">
+    @Html.Partial("_Menus")
+</div>
+@using (Html.BeginForm("Edit", "Gender",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="main-wrap" style="margin-top:20px; width:400px; margin-left:400px;">
+        <div class="reset-head1" style="width:400px;">Edit Occupation</div>
+        <div class="child-main1">
+            <div class="form-group">
+                Gender Name*
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.GenderName, new { @class = "form-control" })
+                </div>
+                <div style="font-size:medium;">
+                    @Html.ValidationMessageFor(x => x.GenderName)
+                </div>
+                @Html.ValidationSummary()
+            </div>
+            <div class="form-group">
+                Status*
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                </div>
+                <div style="font-size:medium;">
+                    @Html.ValidationMessageFor(x => x.Status)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="button">Update</button>
+                    <button class="button" onclick="location.href='@Url.Action("Index", "Gender")';return false;">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

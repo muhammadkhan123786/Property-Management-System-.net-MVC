@@ -1,0 +1,553 @@
+﻿@model _360PropertyManagement.ViewModels.AdsViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#StateTr').hide();
+        $('#citytr').hide();
+        $(function () {
+            $('#CountryId').change(function () {
+                var selectedItem = $(this).val();
+                var ddlStates = $("#StateId");
+                var statesProgress = $("#states-loading-progress");
+                if (selectedItem > 0) {
+                    $('#StateTr').show();
+                    $('#citytr').hide();
+                }
+                else {
+                    $('#StateTr').hide();
+                    $('#citytr').hide();
+                }
+                statesProgress.show();
+                $.ajax({
+                    cache: false,
+                    type: 'GET',
+                    url: "@(Url.Action("StateList", "AdsSubmitted"))",
+                    data: { "CountryId": selectedItem },
+                    success: function (data) {
+                        ddlStates.html('');
+                        ddlStates.append("<option value='' selected='selected'>Select State</option>");
+                        $.each(data, function (id, option) {
+                            ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                        });
+                        statesProgress.hide();
+                        $('#StateId').change(function () {
+                            var StateselectedItem = $(this).val();
+                            var ddlCities = $("#CityId");
+                            var cityProgress = $("#city-loading-progress");
+                            if (StateselectedItem > 0) {
+                                $('#citytr').show();
+                            }
+                            else {
+                                $('#citytr').hide();
+                            }
+                            statesProgress.show();
+                            $.ajax({
+                                cache: false,
+                                type: 'GET',
+                                url: "@(Url.Action("CityList", "AdsSubmitted"))",
+                                data: { "StateId": StateselectedItem },
+                                success: function (data) {
+                                    ddlCities.html('');
+                                    ddlCities.append("<option value='' selected='selected'>Select State</option>");
+                                    $.each(data, function (id, option) {
+                                        ddlCities.append($('<option></option>').val(option.id).html(option.name));
+                                    }
+                                    )
+                                }
+
+                            });
+
+
+
+                        });
+
+
+
+
+                    }
+
+                });
+
+            });
+        });
+    });
+
+    //Category Javascripts
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var ddlvalue = $("#TopCategoryId").val() //the value of the selected option
+        if (ddlvalue > 0) {
+            $.ajax({
+                cache: false,
+                type: 'GET',
+                url: "@(Url.Action("GetSubCategory", "AdsSubmitted"))",
+                data: { "TopCategoryId": ddlvalue },
+                success: function (data) {
+                    if (data.IsShowSubCategory == true) {
+                        $('#subcategorytr').show();
+                        if (data.IsShowArea == true) {
+                            $('#areatr').show();
+                            if (data.IsShowRooms == true) {
+                                $('#roomtr').show();
+                                if (data.IsShowFurnished == true) {
+                                    $('#IsFurnished').show();
+                                }
+                                else if (data.IsShowFurnished == false) {
+                                    $('#IsFurnished').hide();
+                                }
+                            }
+                            else if (data.IsShowRooms == false) {
+                                $('#roomtr').hide();
+                                if (data.IsShowFurnished == true) {
+                                    $('#IsFurnished').show();
+                                }
+                                else if (data.IsShowFurnished == false) {
+                                    $('#IsFurnished').hide();
+                                }
+                            }
+                        }
+                        else if (data.IsShowArea == false) {
+                            $('#areatr').hide();
+                            if (data.IsShowRooms == true) {
+                                $('#roomtr').show();
+                                if (data.IsShowFurnished == true) {
+                                    $('#IsFurnished').show();
+                                }
+                                else if (data.IsShowFurnished == false) {
+                                    $('#IsFurnished').hide();
+                                }
+                            }
+                            else if (data.IsShowRooms == false) {
+                                $('#roomtr').hide();
+                                if (data.IsShowFurnished == true) {
+                                    $('#IsFurnished').show();
+                                }
+                                else if (data.IsShowFurnished == false) {
+                                    $('#IsFurnished').hide();
+                                }
+                            }
+                        }
+                    }
+                    else if (data.IsShowSubCategory == false) {
+                        $('#subcategorytr').hide();
+                        if (data.IsShowArea == true) {
+                            $('#areatr').show();
+                            if (data.IsShowRooms == true) {
+                                $('#roomtr').show();
+                                if (data.IsShowFurnished == true) {
+                                    $('#IsFurnished').show();
+                                }
+                                else if (data.IsShowFurnished == false) {
+                                    $('#IsFurnished').hide();
+                                }
+                            }
+                            else if (data.IsShowRooms == false) {
+                                $('#roomtr').hide();
+                                if (data.IsShowFurnished == true) {
+                                    $('#IsFurnished').show();
+                                }
+                                else if (data.IsShowFurnished == false) {
+                                    $('#IsFurnished').hide();
+                                }
+                            }
+                        }
+                        else if (data.IsShowArea == false) {
+                            $('#areatr').hide();
+                            if (data.IsShowRooms == true) {
+                                $('#roomtr').show();
+                                if (data.IsShowFurnished == true) {
+                                    $('#IsFurnished').show();
+                                }
+                                else if (data.IsShowFurnished == false) {
+                                    $('#IsFurnished').hide();
+                                }
+                            }
+                            else if (data.IsShowRooms == false) {
+                                $('#roomtr').hide();
+                                if (data.IsShowFurnished == true) {
+                                    $('#IsFurnished').show();
+                                }
+                                else if (data.IsShowFurnished == false) {
+                                    $('#IsFurnished').hide();
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        $('#subcategorytr').hide();
+                        $('#roomtr').hide();
+                        $('#IsFurnished').hide();
+                        $('#areatr').hide();
+
+                    }
+                }
+            });
+
+        }
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+     $('#TopCategoryId').change(function () {
+            var selecteditem = $(this).val();
+            if (selecteditem > 0) {
+                $.ajax({
+                    cache: false,
+                    type: 'GET',
+                    url: "@(Url.Action("GetTopCategory", "AdsSubmitted"))",
+                    data: { "TopCategoryId": selecteditem },
+                    success: function (data) {
+                        if (data.IsShowSubCategory == true) {
+                            $('#subcategorytr').show();
+                            if (data.IsShowArea == true) {
+                                $('#areatr').show();
+                                if (data.IsShowRooms == true) {
+                                    $('#roomtr').show();
+                                    if (data.IsShowFurnished == true) {
+                                        $('#IsFurnished').show();
+                                    }
+                                    else if (data.IsShowFurnished == false) {
+                                        $('#IsFurnished').hide();
+                                    }
+                                }
+                                else if (data.IsShowRooms == false) {
+                                    $('#roomtr').hide();
+                                    if (data.IsShowFurnished == true) {
+                                        $('#IsFurnished').show();
+                                    }
+                                    else if (data.IsShowFurnished == false) {
+                                        $('#IsFurnished').hide();
+                                    }
+                                }
+                            }
+                            else if (data.IsShowArea == false) {
+                                $('#areatr').hide();
+                                if (data.IsShowRooms == true) {
+                                    $('#roomtr').show();
+                                    if (data.IsShowFurnished == true) {
+                                        $('#IsFurnished').show();
+                                    }
+                                    else if (data.IsShowFurnished == false) {
+                                        $('#IsFurnished').hide();
+                                    }
+                                }
+                                else if (data.IsShowRooms == false) {
+                                    $('#roomtr').hide();
+                                    if (data.IsShowFurnished == true) {
+                                        $('#IsFurnished').show();
+                                    }
+                                    else if (data.IsShowFurnished == false) {
+                                        $('#IsFurnished').hide();
+                                    }
+                                }
+                            }
+                        }
+                        else if (data.IsShowSubCategory == false) {
+                            $('#subcategorytr').hide();
+                            if (data.IsShowArea == true) {
+                                $('#areatr').show();
+                                if (data.IsShowRooms == true) {
+                                    $('#roomtr').show();
+                                    if (data.IsShowFurnished == true) {
+                                        $('#IsFurnished').show();
+                                    }
+                                    else if (data.IsShowFurnished == false) {
+                                        $('#IsFurnished').hide();
+                                    }
+                                }
+                                else if (data.IsShowRooms == false) {
+                                    $('#roomtr').hide();
+                                    if (data.IsShowFurnished == true) {
+                                        $('#IsFurnished').show();
+                                    }
+                                    else if (data.IsShowFurnished == false) {
+                                        $('#IsFurnished').hide();
+                                    }
+                                }
+                            }
+                            else if (data.IsShowArea == false) {
+                                $('#areatr').hide();
+                                if (data.IsShowRooms == true) {
+                                    $('#roomtr').show();
+                                    if (data.IsShowFurnished == true) {
+                                        $('#IsFurnished').show();
+                                    }
+                                    else if (data.IsShowFurnished == false) {
+                                        $('#IsFurnished').hide();
+                                    }
+                                }
+                                else if (data.IsShowRooms == false) {
+                                    $('#roomtr').hide();
+                                    if (data.IsShowFurnished == true) {
+                                        $('#IsFurnished').show();
+                                    }
+                                    else if (data.IsShowFurnished == false) {
+                                        $('#IsFurnished').hide();
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+
+
+
+                })
+
+            }
+            else {
+                $('#subcategorytr').hide();
+                $('#roomtr').hide();
+                $('#IsFurnished').hide();
+                $('#areatr').hide();
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function readfile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+@{
+    ViewBag.Title = "Add New Ad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:170px;">
+    @using (Html.BeginForm("Edit", "AdsSubmitted",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary();
+        @Html.AntiForgeryToken()
+        <div style="width:1000px;border:thick;">
+            <div style="width:1000px; background-color:black; color:white; text-align:center;">Edit Ad</div>
+            <table style="width:1000px;">
+                <tr>
+                    <td>
+                        Ad Title*
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.PropertyTitle)
+                    </td>
+                    @Html.ValidationMessageFor(x => x.PropertyTitle)
+                </tr>
+                <tr>
+                    <td>
+                        Category*
+                    </td>
+                    <td>
+                        @Html.DropDownList("TopCategoryId", "Select Category")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.TopCategoryId)
+                </tr>
+                <span id="Category-loading-progress" style="display: none;">Please wait..</span>
+                <tr id="subcategorytr">
+                    <td>
+                        SubCategory
+                    </td>
+                    <td>
+                        @Html.DropDownList("SubCategoryId", "Select SubCategory")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.SubCategoryId)
+                </tr>
+
+                <tr id="roomtr">
+                    <td>
+                        Number of Room
+                    </td>
+                    <td>
+                        @Html.DropDownList("RoomsId", "Select Room")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.RoomsId)
+                </tr>
+                <tr id="IsFurnished">
+                    <td>
+                        IS Furnished?
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.IsFurnished, new[] {
+                    new SelectListItem() {Text = "Yes", Value = "true"},
+                    new SelectListItem() {Text = "No", Value = "false"}}, "Not Specified")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.IsFurnished)
+                </tr>
+
+                <tr id="areatr">
+                    <td>
+                        Property Area
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.SqrFoot)Sqrft
+                    </td>
+                    @Html.ValidationMessageFor(x => x.SqrFoot)
+                </tr>
+
+                <tr>
+                    <td>
+                        Minimum Price
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.MinimumPrice)
+                    </td>
+                    @Html.ValidationMessageFor(x => x.MinimumPrice)
+                </tr>
+                <tr>
+                    <td>
+                        Maximum Price
+
+                    </td>
+
+                    <td>
+                        @Html.TextBoxFor(x => x.MaximumPrice)
+                        <p style="color:dimgray;">This Price will display to public</p>
+                    </td>
+                    @Html.ValidationMessageFor(x => x.MaximumPrice)
+                </tr>
+                <tr>
+                    <td>
+                        Property Address*
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Address)
+                        <p style="color:dimgray;">Only Admin Can See</p>
+                    </td>
+                    @Html.ValidationMessageFor(x => x.Address)
+                </tr>
+
+                <tr>
+                    <td>
+                        Ad Description*
+                    </td>
+                    <td class="editor-field">
+                        @Html.TextAreaFor(m => m.PropertyDescription, new { @class = "form-control" })
+                    </td>
+                    @Html.ValidationMessageFor(x => x.PropertyDescription)
+                </tr>
+                <tr>
+                    <td>
+                        Country*
+                    </td>
+                    <td>
+                        @Html.DropDownList("CountryId", "Select Country")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.CountryId)
+                </tr>
+                <span id="states-loading-progress" style="display: none;">Please wait..</span>
+                <tr id="StateTr">
+                    <td>
+                        State*
+                    </td>
+                    <td>
+                        @Html.DropDownList("StateId", "Select State")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.StateId)
+                </tr>
+                <span id="city-loading-progress" style="display: none;">Please wait..</span>
+                <tr id="citytr">
+                    <td>
+                        City*
+                    </td>
+                    <td>
+                        @Html.DropDownList("CityId", "Select State")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.CityId)
+                </tr>
+                <tr>
+                    <td>
+                        Zip Code
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.ZipCode)
+                    </td>
+                    @Html.ValidationMessageFor(x => x.ZipCode)
+                </tr>
+                <tr>
+                    <td>
+                        Location
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.Location)
+                    </td>
+                    @Html.ValidationMessageFor(x => x.Location)
+                </tr>
+                <tr>
+                    <td>
+                        Seo Key Words(Opitional)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.SeoKeyWords)
+                        <p style="color:dimgray;">What User Words Enter To Get Your Ad Multipe Words Can be used separated by Commas(,)</p>
+                    </td>
+                    @Html.ValidationMessageFor(x => x.SeoKeyWords)
+                </tr>
+                <tr>
+                    <td>
+                        Status
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.IsActive, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.IsActive)
+                </tr>
+                <tr>
+                    <td>
+                        Person Name*
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.PersonName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Contact Info*
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.MobileNumber)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button type="submit" class="button">Update</button>
+                    </td>
+                    <td>
+                        <button class="button" onclick="location.href='@Url.Action("Myads", "CustomProfileHandler")';return false;">Not Now</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

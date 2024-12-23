@@ -1,0 +1,64 @@
+﻿@model _360PropertyManagement.Models.Accounts
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+
+    <div class="main-wrap">
+        <div class="reset-head1">Details of an account</div>
+        <ul class="entry_panel" style="width: 700px; height:300px;">
+            <li>
+                @Html.LabelFor(x => x.AccountEmailId, "Account Email Id")
+                <span style=" display: inline-block; margin: 7px; font-weight:bold;">
+                    @Html.DisplayFor(x => x.AccountEmailId)
+                </span>
+            </li>
+            <li style=" display inline-block; margin 7px;">
+                @Html.LabelFor(x => x.IsActive, "Status")
+                <span style=" display: inline-block; margin: 10px;margin-left:10px;">
+                    @(Model.IsActive ? "Active" : "In-Active")
+                </span>
+            </li>
+            <li>
+                @Html.LabelFor(x => x.IsVarified, "varified Email?")
+                <span style=" display: inline-block; margin: 7px;">
+                    @(Model.IsVarified ? "YES" : "NO")
+                </span>
+            </li>
+            <li>
+                @Html.LabelFor(x => x.DateofCreation, "Account created on")
+                <span style=" display: inline-block; margin: 7px;">
+                    @Html.DisplayFor(x => x.DateofCreation)
+                </span>
+            </li>
+            <li>
+                @Html.LabelFor(x => x.role.RoleName, "Account Role")
+                <span style=" display: inline-block; margin: 7px;">
+                    @Html.DisplayFor(x => x.role.RoleName)
+                </span>
+            </li>
+            <li>
+                <span style="display: block; padding-top: 10px; padding-left: 5px; height: 20px">
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.AccountId }, new { @class = "button" })
+                    @Html.ActionLink("Send Email", "SendEmail", new { id = Model.AccountId }, new { @class = "button" })
+                    @Html.ActionLink("Change Password", "ChangePassword", new { id = Model.AccountId }, new { @class = "button" })
+
+                    @Html.ActionLink("List", "Index", new { id = Model.RoleId }, new { @class = "button" })
+                </span>
+            </li>
+        </ul>
+
+    </div>
+
+</div>
+
+
+

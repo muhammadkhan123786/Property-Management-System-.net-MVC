@@ -1,0 +1,34 @@
+﻿@model _360PropertyManagement.Models.LicenseProduct
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:80px;">
+    @Html.Partial("_AdminView")
+</div>
+<div style="margin-top:140px;">
+
+    <div style="margin-top:40px;">
+        <div style="background-color:black; color:white;">Address One </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFor(x => x.address.AddressOne)</div><br />
+        <div style="background-color:black; color:white;">Address Two </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFor(x => x.address.AddressTwo)</div><br />
+        <div style="background-color:black; color:white;">Country </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFor(x => x.address.country.CountryName)</div><br />
+        <div style="background-color:black; color:white;">State </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFor(x => x.address.state.StateName)</div><br />
+        <div style="background-color:black; color:white;">City </div>
+        <div style="font-family:Georgia; text-decoration:solid;">@Html.DisplayFor(x => x.address.city.CityName)</div>
+        <div style="margin-left:100px;">
+            @Html.ActionLink("Edit Address", "EditAddress", new { id = Model.address.AddressId }, new { @class = "button" })
+            @Html.ActionLink("Back", "Index", null, new { @class = "button" })
+        </div>
+
+    </div>
+
+</div>

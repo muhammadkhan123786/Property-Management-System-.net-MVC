@@ -1,0 +1,120 @@
+﻿@model _360PropertyManagement.ViewModels.PersonViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<script type="text/javascript">
+    function readfile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+@{
+    ViewBag.Title = "Detail Personal Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@{
+    var db = new Context();
+
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:170px;">
+@using (Html.BeginForm("ProfilePersonDetails", "CustomProfileHandler",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div style="width:500px;margin-left:300px; border:thick;">
+        Step 2 of 4
+        <div style="width:500px; background-color:black; color:white; text-align:center;">My Personal Details</div>
+        <table style="width:500px;">
+            <tr>
+                <td>
+                    First Name*
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.PersonFirstName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Middle Name
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.personmiddlename)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Last Name
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.personlastname)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gender*
+                </td>
+                <td>
+                    @Html.DropDownList("genderId", "Select Gender")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Occupation*
+                </td>
+                <td>
+                    @Html.DropDownList("occupationId", "Select Occupation")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    My Profile Image
+                </td>
+                <td>
+                    <input type='file' id="file1" name="Photo" onchange="readfile(this);" />
+                    <img id="image_preview" src="https://cdn1.iconfinder.com/data/icons/user-pics/512/user_add-512.png" alt="your image" width="50" height="50" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Status
+                </td>
+                <td>
+                    @Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="button">Add</button>
+                </td>
+                <td>
+                    <button class="button" onclick="location.href='@Url.Action("MyDashBoard", "Account")';return false;">Not Now</button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+</div>

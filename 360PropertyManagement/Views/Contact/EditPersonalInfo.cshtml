@@ -1,0 +1,63 @@
+﻿@model _360PropertyManagement.ViewModels.PersonViewModel
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "EditPersonalInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("EditPersonalInfo", "Contact",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="page-wrap" style="margin-top:-40px;">
+            <div class="reset-head1" style="margin-top:50px; width:auto;">Edit personal info</div>
+            <table style="margin-top:20px;">
+
+                <tr>
+                    <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                        Personal Information
+                    </th>
+                </tr>
+
+
+                <tr>
+                    <td>First Name*:@Html.TextBoxFor(x => x.PersonFirstName)</td>
+                    <td>Middle Name: @Html.TextBoxFor(x => x.personmiddlename)</td>
+                    <td>Last Name: @Html.TextBoxFor(x => x.personlastname)</td>
+                    <td>Gender: @Html.DropDownList("genderId")</td>
+                    <td>Occupation: @Html.DropDownList("occupationId")</td>
+                    <td>
+                        <p> @Html.ValidationMessageFor(x => x.PersonFirstName)</p>
+                        <p>@Html.ValidationMessageFor(x => x.personmiddlename)</p>
+                        <p>@Html.ValidationMessageFor(x => x.personlastname)</p>
+                        <p>@Html.ValidationMessageFor(x => x.GenderId)</p>
+                        <p>@Html.ValidationMessageFor(x => x.Status)</p>
+                        <p>@Html.ValidationMessageFor(x => x.OccupationId)</p>
+                        <p>@Html.ValidationSummary()</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div class="new-but">
+                            <button style="float:right" type="submit" class="button">Update</button>
+                            <button class="button" onclick="location.href='@Url.Action("Index", "Contact")';return false;">Cancel</button>
+                        </div>
+
+                    </td>
+
+
+
+                </tr>
+            </table>
+        </div>
+    }
+
+</div>

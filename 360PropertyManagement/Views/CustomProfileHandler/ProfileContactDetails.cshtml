@@ -1,0 +1,97 @@
+﻿@model _360PropertyManagement.ViewModels.ProfileCustomContactViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Add Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@{
+    var db = new Context();
+
+}
+
+<div id="menudiv" style="margin-top:80px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:175px;">
+    @using (Html.BeginForm("ProfileContactDetails", "CustomProfileHandler",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div style="width:500px;margin-left:300px; border:thick;">
+            Step 3 of 4
+            <div style="width:500px; background-color:black; color:white; text-align:center;">My Contact Details</div>
+            <table style="width:500px;">
+                <tr>
+                    <td>
+                        Mobile One*
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MobileOne)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Mobile Two
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MobileTwo)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Phone One
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.PhoneOne)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Phone Two
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.PhoneTwo)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Website
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Website)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Status
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.Status, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" class="button">Add</button>
+                    </td>
+                    <td>
+                        <button class="button" onclick="location.href='@Url.Action("MyDashBoard", "Account")';return false;">Not Now</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

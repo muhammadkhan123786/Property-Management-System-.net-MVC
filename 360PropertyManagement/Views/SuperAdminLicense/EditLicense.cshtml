@@ -1,0 +1,74 @@
+﻿@model _360PropertyManagement.ViewModels.LicenseEditViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+@{
+    ViewBag.Title = "Add State";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("SuperAdminView")
+</div>
+<div style="margin-top:150px;">
+    @using (Html.BeginForm("EditLicense", "SuperAdminLicense",
+FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="main-wrap" style="margin-top:20px; width:400px; margin-left:400px;">
+            <div class="reset-head1" style="width:400px;">Edit License Details</div>
+            <div class="child-main1">
+                <div class="form-group">
+                    License Slogan*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.SalogonStatement, new { @class = "form-control" })
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.SalogonStatement)
+                    </div>
+                    @Html.ValidationSummary(true)
+                </div>
+                <div class="form-group">
+                    License Status*
+                    <div class="col-md-10">
+                        @Html.DisplayFor(x=>x.Status)
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.Status)
+                    </div>
+
+                </div>
+                <span id="states-loading-progress" style="display: none;">Please wait..</span>
+                <div class="form-group" id="StatesDivID">
+                    License Expired On*
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(x => x.ExpireOn)
+                    </div>
+                    <div style="font-size:medium;">
+                        @Html.ValidationMessageFor(x => x.ExpireOn)
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="button">Update</button>
+                        <button class="button" onclick="location.href='@Url.Action("Index", "SuperAdminLicense")';return false;">Cancel</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    @Scripts.Render("~/bundles/jquery")
+
+
+</div>

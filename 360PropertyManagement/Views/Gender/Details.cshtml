@@ -1,0 +1,61 @@
+﻿@model _360PropertyManagement.ViewModels.GenderViewModel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Detail Gender";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@{
+    var db = new Context();
+
+}
+
+<div style="margin-top:-50px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="width:500px;margin-left:400px; border:thick;">
+    <div style="width:350px; background-color:black; color:white; text-align:center;">Gender Details</div>
+    <table style="width:350px;">
+        <tr>
+            <td>
+                Gender Name
+            </td>
+            <td>
+                @Html.DisplayFor(m => m.GenderName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Status
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Model.GenderName Persons
+            </td>
+            <td>
+                @(db.persons.Where(x => x.OccupationId == Model.id).Count())
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+                @Html.ActionLink("View Persons", "PersonsByGenderId", new { id = Model.id })
+            </td>
+            <td>
+                @Html.ActionLink("Back", "Index")
+            </td>
+        </tr>
+    </table>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

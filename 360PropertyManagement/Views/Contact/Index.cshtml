@@ -1,0 +1,117 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.Contacts>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetAccounts")',
+            minLength: 2
+
+
+        });
+
+    });
+</script>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_Menus")
+</div>
+<div style="margin-top:130px;">
+
+    <div class="page-wrap">
+
+        <div style="height:30px;">
+            <div style="float:left; padding-left:30px; padding-top:20px; font-size:20px;">
+                @Html.ActionLink("Add New Contact", "Add", null, new { @class = "util_icon_new" })
+            </div>
+
+            <div style="float:right; padding-right:30px;">
+                Search Contact @using (Html.BeginForm("Index", "Contact", FormMethod.Get))
+                {
+
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+                }
+            </div>
+
+        </div>
+
+        <table>
+
+            <tr>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Person Image
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Person Name
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Account Email Id
+                </td>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Is Varified?
+                </td>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Mobile Number
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+            </tr>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    
+                    <td class="img1-icon">
+                        @Html.Image(item.person.image.Image)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.person.PersonFullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.person.account.AccountEmailId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeitem => item.person.account.IsVarified)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MobileOne)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit Contact Info", "EditContactInfo", new { id = item.ContactId }, new { @class = "util_icon_edit" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ContactId }, new { @class = "util_icon_view" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ContactId })|
+                        @Html.ActionLink("Change Profile Image", "ChangeProfileImage", new { id = item.person.ImageId })|
+                        @Html.ActionLink("Edit Personal Info", "EditPersonalInfo", new { id = item.PersonId }, new { @class = "util_icon_edit" }) |
+                    </td>
+                </tr>
+
+
+            }
+
+        </table>
+        <div style="padding-left:15px; padding-top:15px;">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+    </div>
+
+</div>

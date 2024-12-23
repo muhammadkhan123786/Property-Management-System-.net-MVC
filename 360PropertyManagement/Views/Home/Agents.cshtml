@@ -1,0 +1,97 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.Accounts>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/Bilal%20Css/ListingCss.css" rel="stylesheet" />
+
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var db = new Context();
+
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_PublicMenus")
+</div>
+<div style="margin-top:130px;">
+
+    <div>
+        <div style="float:right;">
+            <div style="float:right; padding-right:30px;">
+                Search Category  @using (Html.BeginForm("Agents", "Home", FormMethod.Get))
+                {
+
+
+                    @Html.TextBox("emailid", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+                }
+            </div>
+        </div>
+        <div class="page-wrap">
+            <table>
+                <tr>
+                    <td style="background-color: black; font-weight: bold; color: #fff;">
+                        Agent Picture
+                    </td>
+
+                    <td style="background-color: black; font-weight: bold; color: #fff;">
+                        Agent Name
+                    </td>
+                    <td style="background-color: black; font-weight: bold; color: #fff;">
+                        Email Id
+                    </td>
+                    <td style="background-color: black; font-weight: bold; color: #fff;">
+                        Total Ads
+                    </td>
+
+                    <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+                </tr>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @{
+                            var person = db.persons.Where(X => X.account.AccountEmailId == item.AccountEmailId).FirstOrDefault();
+                        }
+                        <td>
+                            @Html.Image(person.image.Image)
+                        </td>
+
+                        <td>
+                            @Html.Display(person.PersonFirstName)
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(x=>item.AccountEmailId)
+                        </td>
+                        <td>
+                            @(db.submitedads.Where(x => x.AccountId== item.AccountId).Count())
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("View Ads", "Propertiesbycategory", new { id = item.AccountId }, new { @class = "button" })
+
+                        </td>
+                    </tr>
+
+
+                }
+
+            </table>
+            <br />
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,28 @@
+﻿
+<link href="~/Content/Site.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:170px;">
+    @using (@Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="entry_panel" style="width: 500px; margin-top:70px">
+            <li>
+                <h3>Delete Ad</h3><h5>@ViewBag.AdAddress</h5>
+            </li>
+            <li>
+                <h4>Are you sure you want to delete this Ad?</h4>
+            </li>
+            <li>
+                <button class="button" type="submit">Yes</button>
+                @Html.ActionLink("No", "Myads", "CustomProfileHandler", null, new { @class = "button" })
+            </li>
+        </ul>
+    }
+</div>

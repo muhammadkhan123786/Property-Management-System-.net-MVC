@@ -1,0 +1,69 @@
+﻿@model _360PropertyManagement.ViewModels.LicensePersonViewModel
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_AdminView")
+</div>
+<div style="margin-top:140px;">
+
+    <div>
+        <table>
+            <tr>
+                <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                    License Person Details
+                </th>
+            </tr>
+            <tr>
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.Firstname, "Person First Name")
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x.Firstname)
+                </td>
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.Secondname, "Person Middle Name")
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x.Secondname)
+                </td>
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.lastname, "Person Last Name")
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x.lastname)
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.PersonGenderName, "Gender")
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x.PersonGenderName)
+                </td>
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.PersonOccupationName, "Occupation")
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x.PersonOccupationName)
+                </td>
+
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit Person Info", "EditLicensePersonInfo", new { id = Model.PersonId }, new { @class = "button" })
+                    @Html.ActionLink("Back", "Index", null, new { @class = "button" })
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>

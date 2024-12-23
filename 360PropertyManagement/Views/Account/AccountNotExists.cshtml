@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Register Account First";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:73px;">
+    @Html.Partial("_PublicMenus")
+</div>
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<div class="main-wrap4" style="margin-top:90px; margin-left:100px;">
+    <div class="reset-head2" style="text-align:center;">You have to create an Account First.</div>
+
+
+    <div style="font-size:20px; text-align:center; padding-top:20px;">
+        Your email is not associated to any account. Please <br />
+        @Html.ActionLink("Click here to create an account", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+    </div>
+
+       
+
+    </div>

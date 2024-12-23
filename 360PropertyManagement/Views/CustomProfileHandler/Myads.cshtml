@@ -1,0 +1,51 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.SubmitedAds>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Myads";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style ="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:180px;" >
+    Search By Title @using (Html.BeginForm("Myads", "CustomProfileHandler", FormMethod.Get))
+    {
+
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { id = "txtSearch" })
+
+
+    }
+
+    <div>
+        @foreach (var item in Model)
+        {
+            <div class="post">
+                <div class="thumbnail">@Html.Image(item.propertyad.image.Image)</div>
+                <div class="info">
+                    <div class="titl">@Html.ActionLink(item.propertyad.PropertyTitle, "Details", "AdsSubmitted", new { id = item.AdId }, null)</div>
+                    <p>@Html.DisplayFor(x => item.propertyad.topcategory.TopCategoryName)‎</p>
+                    <p>@Html.DisplayFor(x => item.areaads.city.CityName)</p>
+                    <p>@Html.DisplayFor(x => item.DateNTime)</p>
+                    <div class="price">Rs. @Convert.ToDecimal(item.propertyad.MaximumPrice).ToString("#,##0.00")</div>
+                    <p>@Html.ActionLink("Edit", "Edit", "AdsSubmitted", new { id = item.AdId }, null) &nbsp; &nbsp; &nbsp;&nbsp;@Html.ActionLink("Delete", "Delete", "AdsSubmitted", new { id = item.AdId }, null) </p>
+
+                </div>
+
+
+            </div>
+            <br />
+
+        }
+    </div>
+
+</div>
+
+
+

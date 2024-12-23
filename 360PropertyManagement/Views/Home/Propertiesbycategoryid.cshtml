@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<_360PropertyManagement.Models.SubmitedAds>
+@using PagedList.Mvc;
+@using _360PropertyManagement.Models;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/Bilal%20Css/ListingCss.css" rel="stylesheet" />
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('a.delete').click(OnDeleteClick);
+ 
+    });
+
+    function OnDeleteClick(e)
+   {
+ 
+
+        var employeeId = e.target.id;
+ 
+        var flag = confirm('You are about to save ad ' + employeeId + ' Are you sure you want to save this ad?');
+
+
+        if (flag) {
+          $.ajax({
+ 
+                url: '/AdsSubmitted/DeleteAJAX',
+ 
+                type: 'POST',
+ 
+                data: { employeeid: employeeId },
+ 
+                dataType: 'json',
+ 
+                success: function (result) { alert(result); },
+                  
+                error: function () { alert('Please Login...!'); }
+ 
+            });
+ 
+        }
+ 
+        return false;
+ 
+    }
+        
+    
+</script>
+    
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var db = new Context();
+   
+}
+
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_PublicMenus")
+</div>
+
+<div style="margin-top:130px;">
+    @foreach(var items in Model)
+    {
+        <div class="prop">
+            <div class="titl">
+                @Html.ActionLink(items.propertyad.PropertyTitle, "Details", new { id = items.AdId })
+            </div>
+        </div>
+        <br />
+    }
+    
+</div>

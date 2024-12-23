@@ -1,0 +1,68 @@
+﻿@model _360PropertyManagement.Models.LicenseProduct
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:80px;">
+    @Html.Partial("_AdminView")
+</div>
+<div style="margin-top:60px;">
+    <div class="page-wrap">
+        <table>
+            <tr>
+            <tr>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Company Name
+                </td>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    License Name
+                </td>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Created On
+                </td>
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Expires On
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">
+                    Is Varified?
+                </td>
+
+                <td style="background-color: black; font-weight: bold; color: #fff;">Actions</td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.LicenseTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Createdon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.ExpireOn)
+                </td>
+                <td>
+                    @(Model.Status ? "Yes" : "No")
+                </td>
+                <td>
+                    @Html.ActionLink("Change Logo", "ChangeCompanyLogo", "LicenseSettings", new { id = Model.ImageId }, null)|
+                    @Html.ActionLink("Payments History", "LicensePayments", "LicenseSettings", new { id = Model.LicenseId }, null)
+                </td>
+            </tr>
+
+
+
+
+        </table>
+
+    </div>
+
+</div>

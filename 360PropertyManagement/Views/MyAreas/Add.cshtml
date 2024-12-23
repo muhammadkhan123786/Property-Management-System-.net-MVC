@@ -1,0 +1,175 @@
+﻿@model _360PropertyManagement.ViewModels.MyAreasViewmodel
+@using _360PropertyManagement.Models;
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#StateTr').hide();
+        $('#citytr').hide();
+        $(function () {
+            $('#CountryId').change(function () {
+                var selectedItem = $(this).val();
+                var ddlStates = $("#StateId");
+                var statesProgress = $("#states-loading-progress");
+                if (selectedItem > 0) {
+                    $('#StateTr').show();
+                    $('#citytr').hide();
+                }
+                else {
+                    $('#StateTr').hide();
+                    $('#citytr').hide();
+                }
+                statesProgress.show();
+                $.ajax({
+                    cache: false,
+                    type: 'GET',
+                    url: "@(Url.Action("StateList", "AdsSubmitted"))",
+                    data: { "CountryId": selectedItem },
+                    success: function (data) {
+                        ddlStates.html('');
+                        ddlStates.append("<option value='' selected='selected'>Select State</option>");
+                        $.each(data, function (id, option) {
+                            ddlStates.append($('<option></option>').val(option.id).html(option.name));
+
+                        });
+                        statesProgress.hide();
+                        $('#StateId').change(function () {
+                            var StateselectedItem = $(this).val();
+                            var ddlCities = $("#CityId");
+                            var cityProgress = $("#city-loading-progress");
+                            if (StateselectedItem > 0) {
+                                $('#citytr').show();
+                            }
+                            else {
+                                $('#citytr').hide();
+                            }
+                            statesProgress.show();
+                            $.ajax({
+                                cache: false,
+                                type: 'GET',
+                                url: "@(Url.Action("CityList", "AdsSubmitted"))",
+                                data: { "StateId": StateselectedItem },
+                                success: function (data) {
+                                    ddlCities.html('');
+                                    ddlCities.append("<option value='' selected='selected'>Select State</option>");
+                                    $.each(data, function (id, option) {
+                                        ddlCities.append($('<option></option>').val(option.id).html(option.name));
+                                    }
+                                    )
+                                }
+
+                            });
+                            statesProgress.hide();
+
+
+                        });
+
+
+
+
+                    }
+
+                });
+
+            });
+        });
+    });
+
+   
+</script>
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_UserMenus")
+</div>
+<div style="margin-top:170px;">
+    @using (Html.BeginForm("Add", "MyAreas",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary();
+        @Html.AntiForgeryToken()
+        <div style="width:1000px;border:thick;">
+            <div style="width:1000px; background-color:black; color:white; text-align:center;">Ad Area</div>
+            <table>
+                <tr>
+                    <td>
+                        Country*
+                    </td>
+                    <td>
+                        @Html.DropDownList("CountryId", "Select Country")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.CountryId)
+                </tr>
+                
+                <tr id="StateTr">
+                    <td>
+                        State*
+                    </td>
+                    <td>
+                        @Html.DropDownList("StateId", "Select State")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.StateId)
+                </tr>
+                
+                <tr id="citytr">
+                    <td>
+                        City*
+                    </td>
+                    <td>
+                        @Html.DropDownList("CityId", "Select State")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.CityId)
+                </tr>
+                <tr>
+                    <td>
+                        Zip Code
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.ZipCode)
+                    </td>
+                    @Html.ValidationMessageFor(x => x.ZipCode)
+                </tr>
+                <tr>
+                    <td>
+                        Location
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(x => x.Location)
+                    </td>
+                    @Html.ValidationMessageFor(x => x.Location)
+                </tr>
+                <tr>
+                    <td>
+                        Status
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.IsActive, new[] {
+                    new SelectListItem() {Text = "Active", Value = "true"},
+                    new SelectListItem() {Text = "In Active", Value = "false"}}, "Not Specified")
+                    </td>
+                    @Html.ValidationMessageFor(x => x.IsActive)
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" class="button">Add</button>
+                    </td>
+                    <td>
+                        <button class="button" onclick="location.href='@Url.Action("Index", "MyAreas")';return false;">Cancel</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

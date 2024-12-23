@@ -1,0 +1,98 @@
+﻿@model _360PropertyManagement.ViewModels.LicenseContactInfo
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_AdminView")
+</div>
+<div style="margin-top:140px;">
+
+    <div>
+        <table>
+            <tr>
+                <th colspan="6" style="background-color: black; font-weight: bold; color: #fff;">
+                    License Contact Details
+                </th>
+            </tr>
+            <tr>
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.MobileOne, "Official Mobile Number")
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x.MobileOne)
+                </td>
+
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.MobileTwo, "Personal Mobile Number")
+                </td>
+                @if (Model.MobileTwo == null)
+                {
+                    <td>
+                        Number Not Available
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(x => x.MobileTwo)
+                    </td>
+                }
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.PhoneOne, "Office Phone Number")
+                </td>
+                @if (Model.PhoneOne == null)
+                {
+                    <td>
+                        Office Number Not Available
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(x => x.PhoneOne)
+                    </td>
+                }
+
+            </tr>
+            <tr>
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.PhoneTwo, "Personal Phone Number")
+                </td>
+                @if (Model.PhoneOne == null)
+                {
+                    <td>
+                        Personal Number Not Available
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(x => x.PhoneTwo)
+                    </td>
+                }
+                <td style="background-color: black; color:white;">
+                    @Html.LabelFor(x => x.Website, "Official Website")
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x.Website)
+                </td>
+
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit Contact Info", "EditLicenseContactInfo", new { id = Model.ContactId }, new { @class = "button" })
+                    @Html.ActionLink("Back", "Index", null, new { @class = "button" })
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>

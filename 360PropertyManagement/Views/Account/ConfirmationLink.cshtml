@@ -1,0 +1,42 @@
+﻿@model _360PropertyManagement.ViewModels.ResendConfirmationViewModel
+@using _360PropertyManagement.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/MySite.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Confirmation Link";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="menudiv" style="margin-top:73px;">
+    @Html.Partial("_PublicMenus")
+</div>
+<div style="margin-top:130px;">
+    @using (Html.BeginForm("ConfirmationLink", "Account",
+FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div class="main-wrap3" style="margin-top:20px;">
+            <div class="reset-head" style="background-color:black;">Resend confirmation link please</div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.emailId, "", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.emailId, new { @class = "form-control" })
+                    <div style="font-size:medium;">@Html.ValidationMessageFor(x => x.emailId)</div>
+                    <div style="width:70px; height:5px;"></div>
+                    <b style="padding-top:10px;">Enter Your Registered Email Id.</b>
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" style="background-color:black;" value="Resend Link" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>
